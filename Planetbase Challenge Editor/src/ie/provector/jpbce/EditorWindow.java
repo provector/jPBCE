@@ -1235,7 +1235,7 @@ public class EditorWindow {
 				});
 				springLayout_4.putConstraint(SpringLayout.SOUTH, btnNewButton, 0, SpringLayout.SOUTH, reachPopulationCheckBox);
 				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton, 0, SpringLayout.EAST, scrollPane_1);
-				btnNewButton.setIcon(new ImageIcon(EditorWindow.class.getResource("/com/jtattoo/plaf/hifi/icons/large/tree_collapsed_14x14.png")));
+				btnNewButton.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
 				internalFrame_4.getContentPane().add(btnNewButton);
 				
 				JButton btnNewButton_1 = new JButton("");
@@ -1248,7 +1248,7 @@ public class EditorWindow {
 				});
 				springLayout_4.putConstraint(SpringLayout.SOUTH, btnNewButton_1, 0, SpringLayout.SOUTH, reachPopulationCheckBox);
 				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_1, -6, SpringLayout.WEST, btnNewButton);
-				btnNewButton_1.setIcon(new ImageIcon(EditorWindow.class.getResource("/com/jtattoo/plaf/hifi/icons/large/tree_expanded_14x14.png")));
+				btnNewButton_1.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_expanded_14x14.png")));
 				internalFrame_4.getContentPane().add(btnNewButton_1);
 				
 				JButton btnNewButton_2 = new JButton("");
@@ -1259,7 +1259,7 @@ public class EditorWindow {
 						model.addRow(new Object[][] {null,null});
 					}
 				});
-				btnNewButton_2.setIcon(new ImageIcon(EditorWindow.class.getResource("/com/jtattoo/plaf/hifi/icons/large/tree_collapsed_14x14.png")));
+				btnNewButton_2.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
 				springLayout_4.putConstraint(SpringLayout.NORTH, btnNewButton_2, -4, SpringLayout.NORTH, lblAccumulateResources);
 				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_2, 0, SpringLayout.EAST, scrollPane);
 				internalFrame_4.getContentPane().add(btnNewButton_2);
@@ -1272,7 +1272,7 @@ public class EditorWindow {
 						if(model.getRowCount()>0) model.removeRow(model.getRowCount()-1);
 					}
 				});
-				btnNewButton_3.setIcon(new ImageIcon(EditorWindow.class.getResource("/com/jtattoo/plaf/hifi/icons/large/tree_expanded_14x14.png")));
+				btnNewButton_3.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_expanded_14x14.png")));
 				springLayout_4.putConstraint(SpringLayout.NORTH, btnNewButton_3, -4, SpringLayout.NORTH, lblAccumulateResources);
 				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_3, -6, SpringLayout.WEST, btnNewButton_2);
 				internalFrame_4.getContentPane().add(btnNewButton_3);
@@ -1286,7 +1286,7 @@ public class EditorWindow {
 						model.addRow(new Object[][] {null,null});
 					}
 				});
-				btnNewButton_4.setIcon(new ImageIcon(EditorWindow.class.getResource("/com/jtattoo/plaf/hifi/icons/large/tree_collapsed_14x14.png")));
+				btnNewButton_4.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
 				springLayout_4.putConstraint(SpringLayout.NORTH, btnNewButton_4, -4, SpringLayout.NORTH, lblAccumulateResources);
 				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_4, 0, SpringLayout.EAST, scrollPane_1);
 				internalFrame_4.getContentPane().add(btnNewButton_4);
@@ -1299,7 +1299,7 @@ public class EditorWindow {
 						if(model.getRowCount()>0) model.removeRow(model.getRowCount()-1);
 					}
 				});
-				btnNewButton_5.setIcon(new ImageIcon(EditorWindow.class.getResource("/com/jtattoo/plaf/hifi/icons/large/tree_expanded_14x14.png")));
+				btnNewButton_5.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_expanded_14x14.png")));
 				springLayout_4.putConstraint(SpringLayout.NORTH, btnNewButton_5, -4, SpringLayout.NORTH, lblAccumulateResources);
 				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_5, -6, SpringLayout.WEST, btnNewButton_4);
 				internalFrame_4.getContentPane().add(btnNewButton_5);
@@ -1312,7 +1312,7 @@ public class EditorWindow {
 						model.addRow(new Object[][] {null,null});
 					}
 				});
-				btnNewButton_6.setIcon(new ImageIcon(EditorWindow.class.getResource("/com/jtattoo/plaf/hifi/icons/large/tree_collapsed_14x14.png")));
+				btnNewButton_6.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
 				springLayout_4.putConstraint(SpringLayout.NORTH, btnNewButton_6, -4, SpringLayout.NORTH, lblKeepCharacterAlive);
 				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_6, 0, SpringLayout.EAST, scrollPane);
 				internalFrame_4.getContentPane().add(btnNewButton_6);
@@ -1325,7 +1325,7 @@ public class EditorWindow {
 						if(model.getRowCount()>0) model.removeRow(model.getRowCount()-1);
 					}
 				});
-				btnNewButton_7.setIcon(new ImageIcon(EditorWindow.class.getResource("/com/jtattoo/plaf/hifi/icons/large/tree_expanded_14x14.png")));
+				btnNewButton_7.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_expanded_14x14.png")));
 				springLayout_4.putConstraint(SpringLayout.NORTH, btnNewButton_7, -4, SpringLayout.NORTH, lblKeepCharacterAlive);
 				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_7, -6, SpringLayout.WEST, btnNewButton_6);
 				internalFrame_4.getContentPane().add(btnNewButton_7);
@@ -1340,7 +1340,7 @@ public class EditorWindow {
 						model.addRow(new Object[][] {null,null});
 					}
 				});
-				btnNewButton_8.setIcon(new ImageIcon(EditorWindow.class.getResource("/com/jtattoo/plaf/hifi/icons/large/tree_collapsed_14x14.png")));
+				btnNewButton_8.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
 				springLayout_4.putConstraint(SpringLayout.NORTH, btnNewButton_8, -4, SpringLayout.NORTH, lblKeepCharacterAlive);
 				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_8, 0, SpringLayout.EAST, scrollPane_1);
 				internalFrame_4.getContentPane().add(btnNewButton_8);
@@ -1353,7 +1353,7 @@ public class EditorWindow {
 						if(model.getRowCount()>0) model.removeRow(model.getRowCount()-1);
 					}
 				});
-				btnNewButton_9.setIcon(new ImageIcon(EditorWindow.class.getResource("/com/jtattoo/plaf/hifi/icons/large/tree_expanded_14x14.png")));
+				btnNewButton_9.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_expanded_14x14.png")));
 				springLayout_4.putConstraint(SpringLayout.NORTH, btnNewButton_9, -4, SpringLayout.NORTH, lblKeepCharacterAlive);
 				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_9, 0, SpringLayout.EAST, btnNewButton_5);
 				internalFrame_4.getContentPane().add(btnNewButton_9);
