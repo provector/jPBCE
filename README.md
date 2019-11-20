@@ -1,5 +1,5 @@
 # jPBCE
-#H1 Planetbase challenge editor
+## Planetbase challenge editor
 
 Compilation Instructions:
 -------------------------
@@ -19,7 +19,7 @@ All settings in the editor are "OPTIONAL" meaning you can modify one of them and
 
 Editor also supports storing your challenges for future editing. Use option "Save Editor File" and "Load Editor File" subsequently. Extension is .jpbce, but they are essentialy JSON format. I highly recommend doing this, as currently there's no way of reading back xml file (maybe in the future? with saves support?)
 
-I have tested it as much as I could so please post all the bugs/errors here. If I find free time I'll try to address them. Also, if it gets popular enough I might add Steam Workshop upload option and campaign support.
+I have tested it as much as I could so please don't hesistate to open an issue if you found one or have some ideas!. If I find free time I'll try to address them. Also, if it gets popular enough I might add Steam Workshop upload option and campaign support.
 
 Enjoy!
 
