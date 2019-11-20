@@ -2,7 +2,7 @@
 ## Planetbase challenge editor
 https://store.steampowered.com/app/403190/Planetbase/
 
-* Disclaimer - I'm not in anyway associated with the game. All work here is purerly made for community purposes and extend longevity of this very fun game :) which I greatly enjoy.
+* Disclaimer - I'm not in anyway associated with the game. All work here is purerly made for community purposes and to extend the longevity of this very fun game :) which I greatly enjoy.
 
 Compilation Instructions:
 -------------------------
