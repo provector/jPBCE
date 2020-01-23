@@ -1,8 +1,10 @@
 package ie.provector.jpbce;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -97,23 +99,26 @@ public class ScenarioWriter {
 		}
 		
 		xml.append("</challenge>");
+			
+			try {
+				//write scenario 
+				OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(new File(path+CC.getChallengeFilename().toLowerCase())), StandardCharsets.UTF_8);
+				fw.write(xml.toString());
+				fw.flush();
+				fw.close();
+				//and desc file
+				String textFile = generateTextFile();
+				fw = new OutputStreamWriter(new FileOutputStream(new File(path+CC.getChallengeDescriptionFilename().toLowerCase())),StandardCharsets.UTF_8);
+				fw.write(textFile);
+				fw.flush();
+				fw.close();
+				return "OK";
+			}catch(IOException e) {
+				return "ERROR: I/O "+e.getMessage();
+			}				
 		
-		try {
-			//Write challenge file
-			BufferedWriter fw = new BufferedWriter(new FileWriter(path+CC.getChallengeFilename().toLowerCase()));
-			fw.write(xml.toString());
-			fw.flush();
-			fw.close();
-			String textFile = generateTextFile();	
-			fw = new BufferedWriter(new FileWriter(path+CC.getChallengeDescriptionFilename().toLowerCase()));
-			fw.write(textFile);
-			fw.flush();
-			fw.close();			
-		} catch (IOException e) {
-			return "ERROR: I/O "+e.getMessage();
-		}
-		return "OK";
 	}
+	
 	
 	private String generateTextFile() {
 		String challengeName = CC.getChallengeName().replaceAll(" ","_").toLowerCase();

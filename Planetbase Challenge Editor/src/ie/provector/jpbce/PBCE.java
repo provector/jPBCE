@@ -43,12 +43,18 @@ import javax.swing.UIManager;
  * TODO: 	[] UI Refresh Issue
  * TODO: 	[] SaveFile name extension suffix
  *
+ * 1.0b
+ * TODO: 	[X] Change to UTF8 encoding for xml file
+ * TODO:	[ ] Option for additional language file
+ * 			[ ] ? Detect language if game installed
+ * 			[ ] Autocreate Planetbase/Challenges dir
+ * 			[ ] Add guards
  */
 
 public class PBCE {
 	
 	final static String _EDITOR_EXTENSION = ".jpbce"; 
-	public final static String _VERSION_STRING = "jPBCE ver 1.Beta.a matthew.piekarski@gmail.com";
+	public final static String _VERSION_STRING = "jPBCE ver 1.Beta.b matthew.piekarski@gmail.com";
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
