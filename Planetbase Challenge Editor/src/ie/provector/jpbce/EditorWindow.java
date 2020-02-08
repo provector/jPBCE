@@ -253,6 +253,7 @@ public class EditorWindow {
 	private JCheckBox languageCheckBox;
 	
 	private String lastSaveToPath;
+	private String lastEditorPath;
 	
 	/**
 	 * Launch the application.
@@ -3529,6 +3530,10 @@ public class EditorWindow {
 		if(selectedFile==null) {
 			saveEditorFileAs();
 		}else {
+			int r = JOptionPane.showConfirmDialog(editorFrame, "The Editor file you are trying to save already exists in the selected path. Overwrite?","File already exists.",JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE);
+	    	if(r!=JOptionPane.OK_OPTION) {
+	    		return;
+	    	}
 			String result = saveChallengeToStatic_CC_Object();
 			if(result.startsWith("ERROR")) {
 				JOptionPane.showMessageDialog(editorFrame, result, "Form validation error",JOptionPane.ERROR_MESSAGE);
@@ -3552,18 +3557,29 @@ public class EditorWindow {
 			//JOptionPane.showMessageDialog(editorFrame, result, "Form validation",JOptionPane.INFORMATION_MESSAGE);
 			JFileChooser fc = new JFileChooser();
 			//FileSystemView.getFileSystemView().getHomeDirectory()
+			if(lastEditorPath!=null) {
+				fc.setCurrentDirectory(new File(lastEditorPath));
+			}
 			int fcr = fc.showSaveDialog(null);
 			if(fcr==JFileChooser.APPROVE_OPTION) {
 				File sf = fc.getSelectedFile();
 				//validate file
-				if (FilenameUtils.getExtension(sf.getName()).equalsIgnoreCase(PBCE._EDITOR_EXTENSION)) {
+				String extension = "."+FilenameUtils.getExtension(sf.getName().toLowerCase());
+				if (extension.equals(PBCE._EDITOR_EXTENSION)) {
 				    // filename is OK as-is
 				} else {
 					sf = new File(sf.toString() + PBCE._EDITOR_EXTENSION);  // append .xml if "foo.jpg.xml" is OK
 					sf = new File(sf.getParentFile(), FilenameUtils.getBaseName(sf.getName())+PBCE._EDITOR_EXTENSION); // ALTERNATIVELY: remove the extension (if any) and replace it with ".xml"
 				}
 				selectedFile = sf;
+				if(selectedFile.exists()) {
+					int r = JOptionPane.showConfirmDialog(editorFrame, "The Editor file you are trying to save already exists in the selected path. Overwrite?","File already exists.",JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE);
+			    	if(r!=JOptionPane.OK_OPTION) {
+			    		return;
+			    	}
+				}
 				infoField.setText("Editor File: "+selectedFile.getAbsolutePath());
+				lastEditorPath = selectedFile.getPath();
 				String json = new Gson().toJson(_CC);
 				try {
 					saveConfigToJsonFile(json,selectedFile.getAbsolutePath());

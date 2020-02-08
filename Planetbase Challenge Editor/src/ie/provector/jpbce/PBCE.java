@@ -41,10 +41,23 @@ import javax.swing.UIManager;
  * 
  * TODO:	[X] Error prompt on failed mkdir
  * TODO:	[X] Overwrite prompt for saving challenge
- * TODO:	[ ] Override prompt for saving editor file
  * TODO:	[X] XML file UTF8 Encoding
  * TODO:	[X] Added Guards as start option
  * TODO:	[X] Changed exit message a bit
+ * 
+ * 1.0.c dev update
+ * 
+ * TODO: 	[X] Language prefix
+ * TODO: 	[X] Error handling for lanugage prefix
+ * TODO: 	[X] Fix overwrite bug
+ * TODO:	[X] Save to challenge remembers last dir
+ * 
+ * 1.0.d dev update
+ * TODO: 	[X] Overwrite prompt for saving editor file.
+ * TODO:	[X] Save Editor file to... now remembers last path
+ * 
+ * 1.0.e beta release
+ * TODO:	[ ] Compatiblity settings.
  * 
  * --------------------------------------------------
  * 
@@ -64,7 +77,7 @@ import javax.swing.UIManager;
 public class PBCE {
 	
 	final static String _EDITOR_EXTENSION = ".jpbce"; 
-	public final static String _VERSION_STRING = "jPBCE ver 1.Beta.b matthew.piekarski@gmail.com";
+	public final static String _VERSION_STRING = "jPBCE ver 1.Beta.D (GPL) _provector";
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
