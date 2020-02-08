@@ -571,6 +571,9 @@ public class ScenarioWriter {
 		if(CC.getStartMedic()>0) {
 			sl.add("\t<starting_specialization type=\"Medic\" amount=\""+CC.getStartMedic()+"\"/>\r\n");
 		}
+		if(CC.getStartGuard()>0) {
+			sl.add("\t<starting_specialization type=\"Guard\" amount=\""+CC.getStartGuard()+"\"/>\r\n");
+		}
 		if(CC.getStartConstructor()>0) {
 			sl.add("\t<starting_specialization type=\"Constructor\" amount=\""+CC.getStartConstructor()+"\"/>\r\n");
 		}

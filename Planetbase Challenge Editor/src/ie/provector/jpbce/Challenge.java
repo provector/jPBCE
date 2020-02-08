@@ -30,6 +30,7 @@ public class Challenge {
 	private int startBiologist;
 	private int startEngineer;
 	private int startMedic;
+	private int startGuard;
 	private int startConstructor;
 	private int startCarrier;
 	private int startDriller;
@@ -261,9 +262,17 @@ public class Challenge {
 	public int getStartMedic() {
 		return startMedic;
 	}
+	
+	public int getStartGuard() {
+		return startGuard;
+	}
 
 	public void setStartMedic(int startMedic) {
 		this.startMedic = startMedic;
+	}
+	
+	public void setStartGuard(int startGuard) {
+		this.startGuard = startGuard;
 	}
 
 	public int getStartConstructor() {

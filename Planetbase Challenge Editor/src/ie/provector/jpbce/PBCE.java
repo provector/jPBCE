@@ -36,6 +36,16 @@ import javax.swing.UIManager;
  * TODO:	[] Campaign Support/Groups Support
  * TODO: 	[] Game days to real time indicator
  * TODO:	[] CleanUp and Re-factor the code
+ * 
+ * 1.0.b dev update
+ * 
+ * TODO:	[X] Error prompt on failed mkdir
+ * TODO:	[X] Overwrite prompt for saving challenge
+ * TODO:	[ ] Override prompt for saving editor file
+ * TODO:	[X] XML file UTF8 Encoding
+ * TODO:	[X] Added Guards as start option
+ * TODO:	[X] Changed exit message a bit
+ * 
  * --------------------------------------------------
  * 
  * Known Bugs:
