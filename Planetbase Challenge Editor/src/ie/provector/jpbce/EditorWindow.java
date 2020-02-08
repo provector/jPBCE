@@ -61,8 +61,6 @@ import ie.provector.jpbce.struct.Entities;
 import ie.provector.jpbce.struct.HSL;
 import ie.provector.jpbce.struct.RGB;
 import ie.provector.jpbce.struct.Vector;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 public class EditorWindow {
 	

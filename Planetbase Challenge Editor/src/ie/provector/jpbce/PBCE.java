@@ -57,7 +57,8 @@ import javax.swing.UIManager;
  * TODO:	[X] Save Editor file to... now remembers last path
  * 
  * 1.0.e beta release
- * TODO:	[ ] Compatiblity settings.
+ * TODO:	[X] Fixed misspelled strings issues for robotics facility and cabin
+ * TODO:	[X] Removed connection option as game didn't allow it
  * 
  * --------------------------------------------------
  * 
@@ -77,7 +78,7 @@ import javax.swing.UIManager;
 public class PBCE {
 	
 	final static String _EDITOR_EXTENSION = ".jpbce"; 
-	public final static String _VERSION_STRING = "jPBCE ver 1.Beta.D (GPL) _provector";
+	public final static String _VERSION_STRING = "jPBCE ver 1.Beta.E (GPL) _provector";
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
