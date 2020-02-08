@@ -12,6 +12,7 @@ public class Challenge {
 	//Basic	
 	private String challengeFilename;	
 	private String challengeDescriptionFilename;
+	private String challengeTranslationPrefix;
 	
 	private String challengeName;
 	private String colonyNameString;
@@ -179,6 +180,14 @@ public class Challenge {
 		this.challengeDescriptionString = challengeDescriptionString;
 	}
 
+	public String getChallengeTranslationPrefix() {
+		return challengeTranslationPrefix;
+	}
+	
+	public void setChallengeTranslationPrefix(String challengeTranslationPrefix) {
+		this.challengeTranslationPrefix = challengeTranslationPrefix;
+	}
+	
 	public String getChallengeName() {
 		return challengeName;
 	}
@@ -1304,6 +1313,9 @@ public class Challenge {
 	public static enum NLHLevel {
 		None,Low,High
 	}
+
+	
+	
 	
 	
 	

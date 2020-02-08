@@ -111,6 +111,15 @@ public class ScenarioWriter {
 				fw = new OutputStreamWriter(new FileOutputStream(new File(path+CC.getChallengeDescriptionFilename().toLowerCase())),StandardCharsets.UTF_8);
 				fw.write(textFile);
 				fw.flush();
+				//add translation desc file
+				if(CC.getChallengeTranslationPrefix()!=null) {
+					//create new file path
+					String fileName = CC.getChallengeDescriptionFilename();
+					fileName = fileName.replaceFirst("en",CC.getChallengeTranslationPrefix());
+					fw = new OutputStreamWriter(new FileOutputStream(new File(path+fileName.toLowerCase())),StandardCharsets.UTF_8);
+					fw.write(textFile);
+					fw.flush();
+				}
 				fw.close();
 				return "OK";
 			}catch(IOException e) {

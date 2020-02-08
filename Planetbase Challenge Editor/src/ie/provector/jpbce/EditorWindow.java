@@ -61,6 +61,8 @@ import ie.provector.jpbce.struct.Entities;
 import ie.provector.jpbce.struct.HSL;
 import ie.provector.jpbce.struct.RGB;
 import ie.provector.jpbce.struct.Vector;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class EditorWindow {
 	
@@ -245,6 +247,12 @@ public class EditorWindow {
 	private JCheckBox hslFlat2CheckBox;
 	
 	private About aboutDialog;
+	private JSpinner startGuardSpinner;
+	private JLabel lblGuard;
+	private JTextField languageField;
+	private JCheckBox languageCheckBox;
+	
+	private String lastSaveToPath;
 	
 	/**
 	 * Launch the application.
@@ -918,6 +926,53 @@ public class EditorWindow {
 		springLayout.putConstraint(SpringLayout.EAST, objectiveDescriptionField, 0, SpringLayout.EAST, startConstructorSpinner);
 		internalFrame.getContentPane().add(objectiveDescriptionField);
 		objectiveDescriptionField.setColumns(10);
+		
+		startGuardSpinner = new JSpinner();
+		springLayout.putConstraint(SpringLayout.WEST, startGuardSpinner, -3, SpringLayout.WEST, challengeFilenameField);
+		springLayout.putConstraint(SpringLayout.SOUTH, startGuardSpinner, 0, SpringLayout.SOUTH, startMedicSpinner);
+		springLayout.putConstraint(SpringLayout.EAST, startGuardSpinner, 0, SpringLayout.EAST, startConstructorSpinner);
+		internalFrame.getContentPane().add(startGuardSpinner);
+		
+		lblGuard = new JLabel("Guard:");
+		springLayout.putConstraint(SpringLayout.SOUTH, lblGuard, 0, SpringLayout.SOUTH, lblMedic);
+		springLayout.putConstraint(SpringLayout.EAST, lblGuard, 0, SpringLayout.EAST, challengeNameField);
+		internalFrame.getContentPane().add(lblGuard);
+		
+		languageCheckBox = new JCheckBox("Generate Additional Langugage Desc File:");
+		languageCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(languageCheckBox.isSelected()) {
+					languageField.setEnabled(true);
+				}else {
+					languageField.setEnabled(false);
+				}
+			}
+		});
+		languageCheckBox.setToolTipText("If you are using translation please specify two country letter code (IE,US,UK,RU,PL etc.) to generate additional description file");
+		springLayout.putConstraint(SpringLayout.NORTH, languageCheckBox, -4, SpringLayout.NORTH, lblMissionText);
+		springLayout.putConstraint(SpringLayout.WEST, languageCheckBox, 6, SpringLayout.EAST, lblMissionText);
+		languageCheckBox.setHorizontalTextPosition(SwingConstants.LEFT);
+		internalFrame.getContentPane().add(languageCheckBox);
+		
+		languageField = new JTextField();
+		languageField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(Tools.isAlpha(languageField.getText())==false || (languageField.getText().length()>2)) {
+					JOptionPane.showMessageDialog(editorFrame, "Country code can't have more than 2 letters!", "Form validation error",JOptionPane.ERROR_MESSAGE);
+					String text = languageField.getText();
+					text = text.substring(0,text.length()-1);
+					languageField.setText(text);
+				}
+			}
+		});
+		languageField.setToolTipText("Here insert two letter country language prefix\\n (PL,IE.UK,RU,IT, etc..)");
+		languageField.setEnabled(false);
+		springLayout.putConstraint(SpringLayout.WEST, languageField, 275, SpringLayout.EAST, lblMissionText);
+		springLayout.putConstraint(SpringLayout.SOUTH, languageField, -4, SpringLayout.NORTH, missionDescriptionTextArea);
+		springLayout.putConstraint(SpringLayout.EAST, languageField, -9, SpringLayout.EAST, internalFrame.getContentPane());
+		internalFrame.getContentPane().add(languageField);
+		languageField.setColumns(10);
 		
 		JInternalFrame internalFrame_4 = new JInternalFrame("Objective Settings");
 		internalFrame_4.setFrameIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/objectives16.png")));
@@ -2985,6 +3040,7 @@ public class EditorWindow {
 		_CC.setStartBiologist((Integer) startBiologistSpinner.getValue());
 		_CC.setStartEngineer((Integer) startEngineerSpinner.getValue());
 		_CC.setStartMedic((Integer) startMedicSpinner.getValue());
+		_CC.setStartGuard((Integer) startGuardSpinner.getValue());
 		_CC.setStartConstructor((Integer) startConstructorSpinner.getValue());
 		_CC.setStartCarrier((Integer) startCarrierSpinner.getValue());
 		_CC.setStartDriller((Integer) startDrillerSpinner.getValue());
@@ -2998,6 +3054,11 @@ public class EditorWindow {
 		_CC.setStartSemiconductors((Integer) startSemiconductorsSpinner.getValue());
 		_CC.setStartGun((Integer) startGunSpinner.getValue());
 		_CC.setStartAlcoholicDrink((Integer) startAlcoholicDrinkSpinner.getValue());
+		
+		//Translation description
+		if(languageCheckBox.isSelected() && languageField.getText().isEmpty()==false) {
+			_CC.setChallengeTranslationPrefix(languageField.getText().toLowerCase());
+		}//else null
 		
 		if(sandstormRiskCheckBox.isSelected()) {
 			_CC.setSandstormRisk((NLHLevel)sandstormRiskComboBox.getSelectedItem());
@@ -3548,6 +3609,7 @@ public class EditorWindow {
 		startBiologistSpinner.setValue(_cc.getStartBiologist());
 		startEngineerSpinner.setValue(_cc.getStartEngineer());
 		startMedicSpinner.setValue(_cc.getStartMedic());
+		startGuardSpinner.setValue(_cc.getStartGuard());
 		startMetalSpinner.setValue(_cc.getStartMetal());
 		startBioplasticSpinner.setValue(_cc.getStartBioplastic());
 		startMealSpinner.setValue(_cc.getStartMeal());
@@ -3560,6 +3622,17 @@ public class EditorWindow {
 		startConstructorSpinner.setValue(_cc.getStartConstructor());
 		startCarrierSpinner.setValue(_cc.getStartCarrier());
 		startDrillerSpinner.setValue(_cc.getStartDriller());
+		
+		//Translation description
+		if(_cc.getChallengeTranslationPrefix()!=null) {
+			languageCheckBox.setSelected(true);
+			languageField.setEnabled(true);
+			languageField.setText(_cc.getChallengeTranslationPrefix().toUpperCase());
+		}else {
+			languageCheckBox.setSelected(false);
+			languageField.setEnabled(false);
+			languageField.setText("");
+		}
 		
 		if(_cc.getSandstormRisk()!=null) {
 			sandstormRiskCheckBox.setSelected(true);
@@ -4390,7 +4463,7 @@ public class EditorWindow {
 	}
 	
 	private void exitMenu() {
-		int r = JOptionPane.showConfirmDialog(editorFrame, "All unsaved data will be lost! Exit?", "jPBCE exit", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int r = JOptionPane.showConfirmDialog(editorFrame, "All unsaved data will be lost! Make sure you just saved the challenge or editor file.\nExit?", "jPBCE exit", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if(r==JOptionPane.OK_OPTION) {
 			System.exit(0);
 		}
@@ -4416,18 +4489,28 @@ public class EditorWindow {
 			JFileChooser fc = new JFileChooser();
 			String fs = System.getProperty("file.separator");
 			File challengeDir = new File(System.getProperty("user.home")+fs+"Documents"+fs+"Planetbase"+fs+"Challenges");
-		    if (!challengeDir.exists()){
-		    	challengeDir.mkdir();			       
-		    }
-			fc.setCurrentDirectory(challengeDir);
+			if(lastSaveToPath!=null) {
+				fc.setCurrentDirectory(new File(lastSaveToPath));
+			}else if (challengeDir.exists()){
+		    	fc.setCurrentDirectory(challengeDir);
+		    }//else it goes default %home%
+			
 		    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		    fc.setAcceptAllFileFilterUsed(false);
 		    fc.setApproveButtonText("Save here");
 		    int r = fc.showOpenDialog(editorFrame);
 		    if(r==JFileChooser.APPROVE_OPTION) {
-		    	
-		    	ScenarioWriter sw = new ScenarioWriter(_CC);
 		    	String fullPath = fc.getSelectedFile().getAbsolutePath()+fs;
+		    	lastSaveToPath = fullPath;
+		    	String fullFilePath = fullPath+fs+_CC.getChallengeFilename();
+		    	if(new File(fullFilePath).exists()) {
+				    	int choice = JOptionPane.showConfirmDialog(editorFrame, "The Challenge you are trying to save already exists in game docs path. Overwrite?","File already exists.",JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE);
+				    	if(choice!=JOptionPane.OK_OPTION) {
+				    		return;
+				    	}//endIFOK
+				}//endIF
+		    	ScenarioWriter sw = new ScenarioWriter(_CC);
+		    	
 				String message = sw.createChallenge(fullPath);
 				if(message.startsWith("ERROR")) {
 					JOptionPane.showMessageDialog(editorFrame, message, "File save error",JOptionPane.ERROR_MESSAGE);
@@ -4449,10 +4532,26 @@ public class EditorWindow {
 			String fs = System.getProperty("file.separator");
 			File challengeDir = new File(System.getProperty("user.home")+fs+"Documents"+fs+"Planetbase"+fs+"Challenges");
 		    if (!challengeDir.exists()){
-		    	challengeDir.mkdir();			       
+		    	try {
+		    		challengeDir.mkdir();
+		    		infoField.setText("Directory was just succesfully created.");
+		    	}catch(Exception e) {
+					JOptionPane.showMessageDialog(editorFrame,"There was an error when trying to create Challenges directory: "+e.getMessage()+"\n Please create the directory manually or use 'Save Challenge To...' option. ", "Directory creation error",JOptionPane.ERROR_MESSAGE);
+					return;
+		    	}
+		    				       
 		    }
-			ScenarioWriter sw = new ScenarioWriter(_CC);
-			String fullPath = challengeDir.getAbsolutePath()+fs;
+		    //Check if we are not overwritting existing file
+		    String fullPath = challengeDir.getAbsolutePath()+fs;
+	    	String fullFilePath = fullPath+fs+_CC.getChallengeFilename();
+		    if(new File(fullFilePath).exists()) {
+		    	int r = JOptionPane.showConfirmDialog(editorFrame, "The Challenge you are trying to save already exists in game docs path. Overwrite?","File already exists.",JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE);
+		    	if(r!=JOptionPane.OK_OPTION) {
+		    		return;
+		    	}
+		    }		    
+		    //else
+			ScenarioWriter sw = new ScenarioWriter(_CC);			
 			String message = sw.createChallenge(fullPath);
 			if(message.startsWith("ERROR")) {
 				JOptionPane.showMessageDialog(editorFrame, message, "File save error",JOptionPane.ERROR_MESSAGE);
