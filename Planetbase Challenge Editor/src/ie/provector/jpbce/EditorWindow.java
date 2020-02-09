@@ -269,6 +269,42 @@ public class EditorWindow {
 	 */
 	@SuppressWarnings("serial")
 	private void initialize() {
+		
+		//Code Refactor
+		
+		//Create Frame
+			
+			//Create Menu
+				//Initialize objects
+				//Add Listeners
+				//Add objects to menu
+			//Add Menu to Fram
+			//Create General Tab
+				//Initialize Objects
+				//Add Listeners
+				//Add Object to tab
+			//Add General Tab to Frame
+			//Create Objectives Tab
+				//Initialize Objects
+				//Add Listeners
+				//Add Object to tab
+			//Add Objectives tab to frame
+			//Create Modifiers Tab
+				//Initialize Objects
+				//Add Listeners
+				//Add Object to tab
+			//Add Modifiers tab to frame
+			//Create Environment Tab
+				//Initialize Objects
+				//Add Listeners
+				//Add Object to tab
+			//Add Environment tab to frame
+			//Create Terrain Tab
+				//Initialize Objects
+				//Add Listeners
+				//Add Object to tab
+			//Add terrain tab to frame
+		
 		editorFrame = new JFrame();
 		editorFrame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -277,7 +313,7 @@ public class EditorWindow {
 			}
 		});
 		editorFrame.setResizable(false);
-		editorFrame.setTitle("Plentbase Challenge Editor ["+PBCE._VERSION_STRING+"]");
+		editorFrame.setTitle("PlanetBase Challenge (Mission) Editor ["+PBCE._VERSION_STRING+"]");
 		editorFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(EditorWindow.class.getResource("/ie/provector/jpbce/icons/icon16.png")));
 		editorFrame.setBounds(100, 100, 724, 658);
 		editorFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

@@ -60,6 +60,9 @@ import javax.swing.UIManager;
  * TODO:	[X] Fixed misspelled strings issues for robotics facility and cabin
  * TODO:	[X] Removed connection option as game didn't allow it
  * 
+ * 1.0.f dev update
+ * TODO:	[X] Fix typo in planetbase title
+ * 
  * --------------------------------------------------
  * 
  * Known Bugs:
