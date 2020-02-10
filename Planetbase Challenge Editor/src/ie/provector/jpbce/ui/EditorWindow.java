@@ -2,6 +2,7 @@ package ie.provector.jpbce.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -67,6 +68,8 @@ import ie.provector.jpbce.ui.CheckedComboBox.CheckableItem;
 import ie.provector.jpbce.ui.CheckedComboBox.CheckedComboBox;
 import ie.provector.jpbce.ui.SpinnerEditor.SpinnerEditor;
 import ie.provector.jpbce.ui.SpinnerEditor.SpinnerRenderer;
+import ie.provector.jpbce.ui.TableButton.JTableButtonMouseListener;
+import ie.provector.jpbce.ui.TableButton.JTableButtonRenderer;
 
 
 public class EditorWindow {
@@ -732,12 +735,12 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(lblSandstormRisk);
 		
 		sandstormRiskComboBox = new JComboBox<>();
-		sandstormRiskComboBox.setEnabled(false);
-		sandstormRiskComboBox.setToolTipText("Specifies the risk of sandstorms ");
-		springLayout.putConstraint(SpringLayout.WEST, sandstormRiskComboBox, 558, SpringLayout.WEST, internalFrame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, sandstormRiskComboBox, -10, SpringLayout.EAST, internalFrame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, lblSandstormRisk, -6, SpringLayout.WEST, sandstormRiskComboBox);
 		springLayout.putConstraint(SpringLayout.NORTH, sandstormRiskComboBox, -2, SpringLayout.NORTH, lblWorker);
+		springLayout.putConstraint(SpringLayout.WEST, sandstormRiskComboBox, 558, SpringLayout.WEST, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, sandstormRiskComboBox, 0, SpringLayout.EAST, challengeFilenameField);
+		sandstormRiskComboBox.setEnabled(false);
+		sandstormRiskComboBox.setToolTipText("Specifies the risk of sandstorms ");
 		sandstormRiskComboBox.setModel(new DefaultComboBoxModel<>(NLHLevel.values()));
 		internalFrame.getContentPane().add(sandstormRiskComboBox);
 		
@@ -821,6 +824,8 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(missionDescriptionTextArea);
 		
 		sandstormRiskCheckBox = new JCheckBox("Sandstorm:");
+		springLayout.putConstraint(SpringLayout.NORTH, sandstormRiskCheckBox, -4, SpringLayout.NORTH, lblWorker);
+		springLayout.putConstraint(SpringLayout.EAST, sandstormRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		sandstormRiskCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(sandstormRiskCheckBox.isSelected()) {
@@ -830,8 +835,6 @@ public class EditorWindow {
 				}
 			}
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, sandstormRiskCheckBox, -4, SpringLayout.NORTH, lblWorker);
-		springLayout.putConstraint(SpringLayout.EAST, sandstormRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		sandstormRiskCheckBox.setHorizontalTextPosition(SwingConstants.LEFT);
 		internalFrame.getContentPane().add(sandstormRiskCheckBox);
 		
@@ -1166,19 +1169,21 @@ public class EditorWindow {
 		springLayout_4.putConstraint(SpringLayout.EAST, reachPopulationSpinner, 0, SpringLayout.EAST, survivalTimeSpinner);
 		internalFrame_4.getContentPane().add(reachPopulationSpinner);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setToolTipText("Accumulate a certain amount of resources. param: indicates the type of resource. value: indicates the amount.\t\t ");
-		springLayout_4.putConstraint(SpringLayout.WEST, scrollPane, 10, SpringLayout.WEST, internalFrame_4.getContentPane());
-		springLayout_4.putConstraint(SpringLayout.SOUTH, scrollPane, -199, SpringLayout.SOUTH, internalFrame_4.getContentPane());
-		springLayout_4.putConstraint(SpringLayout.EAST, scrollPane, -373, SpringLayout.EAST, internalFrame_4.getContentPane());
-		internalFrame_4.getContentPane().add(scrollPane);
+		JScrollPane resourceTableScrollPane = new JScrollPane();
+		resourceTableScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		resourceTableScrollPane.setToolTipText("Accumulate a certain amount of resources. param: indicates the type of resource. value: indicates the amount.\t\t ");
+		springLayout_4.putConstraint(SpringLayout.WEST, resourceTableScrollPane, 10, SpringLayout.WEST, internalFrame_4.getContentPane());
+		springLayout_4.putConstraint(SpringLayout.SOUTH, resourceTableScrollPane, -199, SpringLayout.SOUTH, internalFrame_4.getContentPane());
+		springLayout_4.putConstraint(SpringLayout.EAST, resourceTableScrollPane, -373, SpringLayout.EAST, internalFrame_4.getContentPane());
+		internalFrame_4.getContentPane().add(resourceTableScrollPane);
 		
 		JLabel lblAccumulateResources = new JLabel("Accumulate Resources:");
-		springLayout_4.putConstraint(SpringLayout.NORTH, scrollPane, 6, SpringLayout.SOUTH, lblAccumulateResources);
+		springLayout_4.putConstraint(SpringLayout.NORTH, resourceTableScrollPane, 6, SpringLayout.SOUTH, lblAccumulateResources);
 		springLayout_4.putConstraint(SpringLayout.NORTH, lblAccumulateResources, 6, SpringLayout.SOUTH, timeLimitCheckBox);
 		springLayout_4.putConstraint(SpringLayout.WEST, lblAccumulateResources, 0, SpringLayout.WEST, reachPopulationCheckBox);
 		
 		resourcesTable = new JTable();
+		resourcesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		resourcesTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
@@ -1188,21 +1193,35 @@ public class EditorWindow {
 		resourcesTable.setModel(new DefaultTableModel(
 			null,
 			new String[] {
-				"Resource", "Amount"
+				"Resource", "Amount","-"
 			}
 		) {
 			Class<?>[] columnTypes = new Class[] {
-				Object.class, SpinnerEditor.class
+				Object.class, SpinnerEditor.class, JButton.class
 			};
 			public Class<?> getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
-		resourcesTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(resourcesBox));
-		resourcesTable.getColumnModel().getColumn(1).setCellRenderer(new SpinnerRenderer());
-		resourcesTable.getColumnModel().getColumn(1).setCellEditor(new SpinnerEditor());
 		
-		scrollPane.setViewportView(resourcesTable);
+		/*
+		 * Resource Table Columns
+		 */
+		{
+			TableColumn resourcesColumn = resourcesTable.getColumnModel().getColumn(0);
+			resourcesColumn.setCellEditor(new DefaultCellEditor(resourcesBox));
+			resourcesColumn.setPreferredWidth(213);
+			resourcesTable.getColumnModel().getColumn(1).setCellRenderer(new SpinnerRenderer());
+			resourcesTable.getColumnModel().getColumn(1).setCellEditor(new SpinnerEditor());
+			TableColumn buttonColumn = resourcesTable.getColumnModel().getColumn(2);
+			buttonColumn.setPreferredWidth(20);
+			buttonColumn.setCellRenderer(new JTableButtonRenderer());
+		}
+		
+		resourcesTable.addMouseListener(new JTableButtonMouseListener(resourcesTable));
+		
+		
+		resourceTableScrollPane.setViewportView(resourcesTable);
 		internalFrame_4.getContentPane().add(lblAccumulateResources);
 		
 		JLabel lblBuildStructures = new JLabel("Build Structures:");
@@ -1210,136 +1229,203 @@ public class EditorWindow {
 		springLayout_4.putConstraint(SpringLayout.WEST, lblBuildStructures, 14, SpringLayout.EAST, reachPopulationSpinner);
 		internalFrame_4.getContentPane().add(lblBuildStructures);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setToolTipText("<html>Build a certain amount of structures. param: indicates the type of structure. <br> nvalue: indicates the amount. size: indicates the size of the structures to be built,<br> means any size, values in the range [1, 5] indicate a particular size. </html>");
-		springLayout_4.putConstraint(SpringLayout.NORTH, scrollPane_1, 6, SpringLayout.SOUTH, lblBuildStructures);
-		springLayout_4.putConstraint(SpringLayout.WEST, scrollPane_1, 14, SpringLayout.EAST, survivalTimeSpinner);
-		springLayout_4.putConstraint(SpringLayout.SOUTH, scrollPane_1, 0, SpringLayout.SOUTH, timeLimitCheckBox);
-		springLayout_4.putConstraint(SpringLayout.EAST, scrollPane_1, -10, SpringLayout.EAST, internalFrame_4.getContentPane());
-		internalFrame_4.getContentPane().add(scrollPane_1);
+		JScrollPane structuresTableScrollPane = new JScrollPane();
+		structuresTableScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		structuresTableScrollPane.setToolTipText("<html>Build a certain amount of structures. param: indicates the type of structure. <br> nvalue: indicates the amount. size: indicates the size of the structures to be built,<br> means any size, values in the range [1, 5] indicate a particular size. </html>");
+		springLayout_4.putConstraint(SpringLayout.NORTH, structuresTableScrollPane, 6, SpringLayout.SOUTH, lblBuildStructures);
+		springLayout_4.putConstraint(SpringLayout.WEST, structuresTableScrollPane, 14, SpringLayout.EAST, survivalTimeSpinner);
+		springLayout_4.putConstraint(SpringLayout.SOUTH, structuresTableScrollPane, 0, SpringLayout.SOUTH, timeLimitCheckBox);
+		springLayout_4.putConstraint(SpringLayout.EAST, structuresTableScrollPane, -10, SpringLayout.EAST, internalFrame_4.getContentPane());
+		internalFrame_4.getContentPane().add(structuresTableScrollPane);
 		
 		structuresTable = new JTable();
+		structuresTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		structuresTable.setModel(new DefaultTableModel(
 			null,
 			new String[] {
-				"Structure", "Size", "Number"
+				"Structure", "Size", "Number","-"
 			}
 		) {
 			Class<?>[] columnTypes = new Class[] {
-				Object.class, Integer.class, SpinnerEditor.class
+				Object.class, Integer.class, SpinnerEditor.class, JButton.class
 			};
 			public Class<?> getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
 		
-		TableColumn structuresColumn = structuresTable.getColumnModel().getColumn(0);
-		scrollPane_1.setViewportView(structuresTable);
-		TableColumn sizeColumn = structuresTable.getColumnModel().getColumn(1);
-		TableColumn numberColumn = structuresTable.getColumnModel().getColumn(2);
-		numberColumn.setCellRenderer(new SpinnerRenderer());
-		numberColumn.setCellEditor(new SpinnerEditor());
+		/*
+		 * StructureColumns
+		 */
+		{
+			TableColumn buttonColumn = structuresTable.getColumnModel().getColumn(3);
+			buttonColumn.setPreferredWidth(20);
+			buttonColumn.setCellRenderer(new JTableButtonRenderer());
+			TableColumn structuresColumn = structuresTable.getColumnModel().getColumn(0);
+			structuresColumn.setPreferredWidth(280);
+			structuresTableScrollPane.setViewportView(structuresTable);
+			TableColumn sizeColumn = structuresTable.getColumnModel().getColumn(1);
+			TableColumn numberColumn = structuresTable.getColumnModel().getColumn(2);
+			numberColumn.setCellRenderer(new SpinnerRenderer());
+			numberColumn.setCellEditor(new SpinnerEditor());
+			JComboBox<String> structuresBox = new JComboBox<>();
+			structuresBox.setModel(new DefaultComboBoxModel<String>(Entities.AllStructuresString));
+			structuresColumn.setCellEditor(new DefaultCellEditor(structuresBox));
+			
+			JComboBox<String> sizeBox = new JComboBox<>();
+			sizeBox.setModel(new DefaultComboBoxModel<String>(new String[] {"0 - Any","1","2","3","4","5"}));
+			sizeColumn.setCellEditor(new DefaultCellEditor(sizeBox));
+		}
+		
+		structuresTable.addMouseListener(new JTableButtonMouseListener(structuresTable));
+		
+		
+		
+		
+		
+		
 		JLabel lblBuildComponents = new JLabel("Build Components:");
 		springLayout_4.putConstraint(SpringLayout.NORTH, lblBuildComponents, 0, SpringLayout.NORTH, lblAccumulateResources);
 		internalFrame_4.getContentPane().add(lblBuildComponents);
 		
-		JScrollPane scrollPane_2 = new JScrollPane();
-		springLayout_4.putConstraint(SpringLayout.WEST, lblBuildComponents, 0, SpringLayout.WEST, scrollPane_2);
+		JScrollPane componentsTableScrollPane = new JScrollPane();
+		componentsTableScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		springLayout_4.putConstraint(SpringLayout.WEST, lblBuildComponents, 0, SpringLayout.WEST, componentsTableScrollPane);
 		
-				scrollPane_2.setToolTipText("\t\t\tBuild a certain amount of components. param: indicates the type of component. value: indicates the amount.");
-				springLayout_4.putConstraint(SpringLayout.WEST, scrollPane_2, 10, SpringLayout.EAST, scrollPane);
-				springLayout_4.putConstraint(SpringLayout.EAST, scrollPane_2, -10, SpringLayout.EAST, internalFrame_4.getContentPane());
-				internalFrame_4.getContentPane().add(scrollPane_2);
+				componentsTableScrollPane.setToolTipText("\t\t\tBuild a certain amount of components. param: indicates the type of component. value: indicates the amount.");
+				springLayout_4.putConstraint(SpringLayout.WEST, componentsTableScrollPane, 10, SpringLayout.EAST, resourceTableScrollPane);
+				springLayout_4.putConstraint(SpringLayout.EAST, componentsTableScrollPane, -10, SpringLayout.EAST, internalFrame_4.getContentPane());
+				internalFrame_4.getContentPane().add(componentsTableScrollPane);
 				
 				componentsTable = new JTable();
+				componentsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				componentsTable.setModel(new DefaultTableModel(
 					null,
 					new String[] {
-						"Component", "Amount"
+						"Component", "Amount","-"
 					}
 				) {
 					Class<?>[] columnTypes = new Class[] {
-						Object.class, SpinnerEditor.class
+						Object.class, SpinnerEditor.class, JButton.class
 					};
 					public Class<?> getColumnClass(int columnIndex) {
 						return columnTypes[columnIndex];
 					}
 				});
-				componentsTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(componentsBox));
-				componentsTable.getColumnModel().getColumn(1).setCellRenderer(new SpinnerRenderer());
-				componentsTable.getColumnModel().getColumn(1).setCellEditor(new SpinnerEditor());
-				scrollPane_2.setViewportView(componentsTable);
+				
+				/*
+				 * Components Table Columns
+				 */
+				{
+					TableColumn componentsColumn = componentsTable.getColumnModel().getColumn(0);
+					componentsColumn.setCellEditor(new DefaultCellEditor(componentsBox));
+					componentsColumn.setPreferredWidth(239);
+					componentsTable.getColumnModel().getColumn(1).setCellRenderer(new SpinnerRenderer());
+					componentsTable.getColumnModel().getColumn(1).setCellEditor(new SpinnerEditor());
+					TableColumn buttonColumn = componentsTable.getColumnModel().getColumn(2);
+					buttonColumn.setCellRenderer(new JTableButtonRenderer());
+					buttonColumn.setPreferredWidth(20);
+					
+				}			
+				componentsTable.addMouseListener(new JTableButtonMouseListener(componentsTable));
+				componentsTableScrollPane.setViewportView(componentsTable);
 				
 				JLabel lblKeepCharacterAlive = new JLabel("Keep Character Alive:");
-				springLayout_4.putConstraint(SpringLayout.NORTH, lblKeepCharacterAlive, 6, SpringLayout.SOUTH, scrollPane);
+				springLayout_4.putConstraint(SpringLayout.NORTH, lblKeepCharacterAlive, 6, SpringLayout.SOUTH, resourceTableScrollPane);
 				springLayout_4.putConstraint(SpringLayout.WEST, lblKeepCharacterAlive, 0, SpringLayout.WEST, reachPopulationCheckBox);
 				internalFrame_4.getContentPane().add(lblKeepCharacterAlive);
 				
 				JLabel lblReachSpecialization = new JLabel("Reach Specialization:");
-				springLayout_4.putConstraint(SpringLayout.NORTH, lblReachSpecialization, 6, SpringLayout.SOUTH, scrollPane_2);
+				springLayout_4.putConstraint(SpringLayout.NORTH, lblReachSpecialization, 6, SpringLayout.SOUTH, componentsTableScrollPane);
 				springLayout_4.putConstraint(SpringLayout.WEST, lblReachSpecialization, 0, SpringLayout.WEST, lblBuildComponents);
 				internalFrame_4.getContentPane().add(lblReachSpecialization);
 				
-				JScrollPane scrollPane_3 = new JScrollPane();
-				scrollPane_3.setToolTipText("<html>This will fail the challenge if a particular character dies.<br>param: indicates the character name, must be exact.</html>");
-				springLayout_4.putConstraint(SpringLayout.NORTH, scrollPane_3, 6, SpringLayout.SOUTH, lblKeepCharacterAlive);
-				springLayout_4.putConstraint(SpringLayout.WEST, scrollPane_3, 10, SpringLayout.WEST, internalFrame_4.getContentPane());
-				springLayout_4.putConstraint(SpringLayout.SOUTH, scrollPane_3, -10, SpringLayout.SOUTH, internalFrame_4.getContentPane());
-				springLayout_4.putConstraint(SpringLayout.EAST, scrollPane_3, 0, SpringLayout.EAST, scrollPane);
-				internalFrame_4.getContentPane().add(scrollPane_3);
+				JScrollPane caracterTableScrollPane = new JScrollPane();
+				caracterTableScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+				caracterTableScrollPane.setToolTipText("<html>This will fail the challenge if a particular character dies.<br>param: indicates the character name, must be exact.</html>");
+				springLayout_4.putConstraint(SpringLayout.NORTH, caracterTableScrollPane, 6, SpringLayout.SOUTH, lblKeepCharacterAlive);
+				springLayout_4.putConstraint(SpringLayout.WEST, caracterTableScrollPane, 10, SpringLayout.WEST, internalFrame_4.getContentPane());
+				springLayout_4.putConstraint(SpringLayout.SOUTH, caracterTableScrollPane, -10, SpringLayout.SOUTH, internalFrame_4.getContentPane());
+				springLayout_4.putConstraint(SpringLayout.EAST, caracterTableScrollPane, 0, SpringLayout.EAST, resourceTableScrollPane);
+				internalFrame_4.getContentPane().add(caracterTableScrollPane);
 				
 				characterTable = new JTable();
+				characterTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				characterTable.setModel(new DefaultTableModel(
 					null,
 					new String[] {
-						"Name"
+						"Name","-"
 					}
 				) {
 					Class<?>[] columnTypes = new Class[] {
-						String.class
+						String.class, JButton.class
 					};
 					public Class<?> getColumnClass(int columnIndex) {
 						return columnTypes[columnIndex];
 					}
 				});
-				scrollPane_3.setViewportView(characterTable);
+				/*
+				 * Character Table columns
+				 */
+				{
+					TableColumn characterColumn = characterTable.getColumnModel().getColumn(0);
+					characterColumn.setPreferredWidth(289);
+					TableColumn buttonColumn = characterTable.getColumnModel().getColumn(1);
+					buttonColumn.setPreferredWidth(20);
+					buttonColumn.setCellRenderer(new JTableButtonRenderer());
+				}
+				characterTable.addMouseListener(new JTableButtonMouseListener(characterTable));
+				caracterTableScrollPane.setViewportView(characterTable);
 				
-				JScrollPane scrollPane_4 = new JScrollPane();
-				springLayout_4.putConstraint(SpringLayout.SOUTH, scrollPane_4, -10, SpringLayout.SOUTH, internalFrame_4.getContentPane());
-				scrollPane_4.setToolTipText("Reach a certain number of characters of a particular specialization.");
-				springLayout_4.putConstraint(SpringLayout.WEST, scrollPane_4, 0, SpringLayout.WEST, scrollPane_2);
-				springLayout_4.putConstraint(SpringLayout.EAST, scrollPane_4, -10, SpringLayout.EAST, internalFrame_4.getContentPane());
-				internalFrame_4.getContentPane().add(scrollPane_4);
+				JScrollPane specializationTableScrollPane = new JScrollPane();
+				specializationTableScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+				springLayout_4.putConstraint(SpringLayout.SOUTH, specializationTableScrollPane, -10, SpringLayout.SOUTH, internalFrame_4.getContentPane());
+				specializationTableScrollPane.setToolTipText("Reach a certain number of characters of a particular specialization.");
+				springLayout_4.putConstraint(SpringLayout.WEST, specializationTableScrollPane, 0, SpringLayout.WEST, componentsTableScrollPane);
+				springLayout_4.putConstraint(SpringLayout.EAST, specializationTableScrollPane, -10, SpringLayout.EAST, internalFrame_4.getContentPane());
+				internalFrame_4.getContentPane().add(specializationTableScrollPane);
 				
 				specializationTable = new JTable();
+				specializationTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				specializationTable.setModel(new DefaultTableModel(
 					null,
 					new String[] {
-						"Specialization", "Number"
+						"Specialization", "Number","-"
 					}
 				) {
 					Class<?>[] columnTypes = new Class[] {
-						Object.class, SpinnerEditor.class
+						Object.class, SpinnerEditor.class, JButton.class
 					};
 					public Class<?> getColumnClass(int columnIndex) {
 						return columnTypes[columnIndex];
 					}
 				});
-				specializationTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(specializationsBox));
-				specializationTable.getColumnModel().getColumn(1).setCellRenderer(new SpinnerRenderer());
-				specializationTable.getColumnModel().getColumn(1).setCellEditor(new SpinnerEditor());
-				scrollPane_4.setViewportView(specializationTable);
+				/*
+				 * Specialization table columns
+				 */
+				{
+					TableColumn specializationColumn = specializationTable.getColumnModel().getColumn(0);
+					specializationColumn.setCellEditor(new DefaultCellEditor(specializationsBox));
+					specializationColumn.setPreferredWidth(239);
+					specializationTable.getColumnModel().getColumn(1).setCellRenderer(new SpinnerRenderer());
+					specializationTable.getColumnModel().getColumn(1).setCellEditor(new SpinnerEditor());
+					TableColumn buttonColumn = specializationTable.getColumnModel().getColumn(2);
+					buttonColumn.setPreferredWidth(20);
+					buttonColumn.setCellRenderer(new JTableButtonRenderer());
+				}
+				specializationTable.addMouseListener(new JTableButtonMouseListener(specializationTable));
+				specializationTableScrollPane.setViewportView(specializationTable);
 				
 				JButton btnNewButton = new JButton("");
 				btnNewButton.setToolTipText("Add New Objective");
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						DefaultTableModel model = (DefaultTableModel) structuresTable.getModel();
-						model.addRow(new Object[] {null,"0 - Any",new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1))});
+						model.addRow(new Object[] {null,"0 - Any",new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)), createNewRemoveButton()});
 					}
 				});
 				springLayout_4.putConstraint(SpringLayout.SOUTH, btnNewButton, 0, SpringLayout.SOUTH, reachPopulationCheckBox);
-				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton, 0, SpringLayout.EAST, scrollPane_1);
+				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton, 0, SpringLayout.EAST, structuresTableScrollPane);
 				btnNewButton.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
 				internalFrame_4.getContentPane().add(btnNewButton);
 				
@@ -1361,12 +1447,12 @@ public class EditorWindow {
 				btnNewButton_2.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						DefaultTableModel model = (DefaultTableModel) resourcesTable.getModel();
-						model.addRow(new Object[] {null,new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1))});
+						model.addRow(new Object[] {null,new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)), createNewRemoveButton() });
 					}
 				});
 				btnNewButton_2.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
 				springLayout_4.putConstraint(SpringLayout.NORTH, btnNewButton_2, -4, SpringLayout.NORTH, lblAccumulateResources);
-				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_2, 0, SpringLayout.EAST, scrollPane);
+				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_2, 0, SpringLayout.EAST, resourceTableScrollPane);
 				internalFrame_4.getContentPane().add(btnNewButton_2);
 				
 				JButton btnNewButton_3 = new JButton("");
@@ -1383,17 +1469,17 @@ public class EditorWindow {
 				internalFrame_4.getContentPane().add(btnNewButton_3);
 				
 				JButton btnNewButton_4 = new JButton("");
-				springLayout_4.putConstraint(SpringLayout.NORTH, scrollPane_2, 4, SpringLayout.SOUTH, btnNewButton_4);
+				springLayout_4.putConstraint(SpringLayout.NORTH, componentsTableScrollPane, 4, SpringLayout.SOUTH, btnNewButton_4);
 				btnNewButton_4.setToolTipText("Add New Objective");
 				btnNewButton_4.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						DefaultTableModel model = (DefaultTableModel) componentsTable.getModel();
-						model.addRow(new Object[] {null,new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1))});
+						model.addRow(new Object[] {null,new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)), createNewRemoveButton()});
 					}
 				});
 				btnNewButton_4.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
 				springLayout_4.putConstraint(SpringLayout.NORTH, btnNewButton_4, -4, SpringLayout.NORTH, lblAccumulateResources);
-				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_4, 0, SpringLayout.EAST, scrollPane_1);
+				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_4, 0, SpringLayout.EAST, structuresTableScrollPane);
 				internalFrame_4.getContentPane().add(btnNewButton_4);
 				
 				JButton btnNewButton_5 = new JButton("");
@@ -1414,12 +1500,12 @@ public class EditorWindow {
 				btnNewButton_6.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						DefaultTableModel model = (DefaultTableModel) characterTable.getModel();
-						model.addRow(new Object[][] {null,null});
+						model.addRow(new Object[] {null,createNewRemoveButton()});
 					}
 				});
 				btnNewButton_6.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
 				springLayout_4.putConstraint(SpringLayout.NORTH, btnNewButton_6, -4, SpringLayout.NORTH, lblKeepCharacterAlive);
-				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_6, 0, SpringLayout.EAST, scrollPane);
+				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_6, 0, SpringLayout.EAST, resourceTableScrollPane);
 				internalFrame_4.getContentPane().add(btnNewButton_6);
 				
 				JButton btnNewButton_7 = new JButton("");
@@ -1436,18 +1522,18 @@ public class EditorWindow {
 				internalFrame_4.getContentPane().add(btnNewButton_7);
 				
 				JButton btnNewButton_8 = new JButton("");
-				springLayout_4.putConstraint(SpringLayout.NORTH, scrollPane_4, 4, SpringLayout.SOUTH, btnNewButton_8);
-				springLayout_4.putConstraint(SpringLayout.SOUTH, scrollPane_2, -2, SpringLayout.NORTH, btnNewButton_8);
+				springLayout_4.putConstraint(SpringLayout.NORTH, specializationTableScrollPane, 4, SpringLayout.SOUTH, btnNewButton_8);
+				springLayout_4.putConstraint(SpringLayout.SOUTH, componentsTableScrollPane, -2, SpringLayout.NORTH, btnNewButton_8);
 				btnNewButton_8.setToolTipText("Add New Objective");
 				btnNewButton_8.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						DefaultTableModel model = (DefaultTableModel) specializationTable.getModel();
-						model.addRow(new Object[] {null,new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1))});
+						model.addRow(new Object[] {null,new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)),createNewRemoveButton()});
 					}
 				});
 				btnNewButton_8.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
 				springLayout_4.putConstraint(SpringLayout.NORTH, btnNewButton_8, -4, SpringLayout.NORTH, lblKeepCharacterAlive);
-				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_8, 0, SpringLayout.EAST, scrollPane_1);
+				springLayout_4.putConstraint(SpringLayout.EAST, btnNewButton_8, 0, SpringLayout.EAST, structuresTableScrollPane);
 				internalFrame_4.getContentPane().add(btnNewButton_8);
 				
 				JButton btnNewButton_9 = new JButton("");
@@ -3021,13 +3107,7 @@ public class EditorWindow {
 		 * Structures Table
 		 */
 		
-		JComboBox<String> structuresBox = new JComboBox<>();
-		structuresBox.setModel(new DefaultComboBoxModel<String>(Entities.AllStructuresString));
-		structuresColumn.setCellEditor(new DefaultCellEditor(structuresBox));
 		
-		JComboBox<String> sizeBox = new JComboBox<>();
-		sizeBox.setModel(new DefaultComboBoxModel<String>(new String[] {"0 - Any","1","2","3","4","5"}));
-		sizeColumn.setCellEditor(new DefaultCellEditor(sizeBox));
 		
 		
 		/*********************************************/
@@ -3050,6 +3130,12 @@ public class EditorWindow {
 		/************************************************/
 		
 	}	
+
+	protected JButton createNewRemoveButton() {
+		JButton xButton = new JButton("");
+		xButton.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_expanded_14x14.png")));
+		return xButton;
+	}
 
 	private void showColorPicker(JTextField source) {
 		if(source.isEnabled()==false) return;

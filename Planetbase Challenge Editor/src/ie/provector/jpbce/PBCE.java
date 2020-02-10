@@ -69,6 +69,9 @@ import ie.provector.jpbce.ui.SplashScreen;
  * TODO:	[X] Fixed bug where empty character objective field would throw a silent Exception and no error dialog
  * TODO:	[X] Replaced Integer field in Tables with a Spinner
  * 
+ * 1.0.g dev update
+ * TODO:	[X] Added button to remove specific row from objectives table
+ * 
  * --------------------------------------------------
  * 
  * Known Bugs:
@@ -87,14 +90,14 @@ import ie.provector.jpbce.ui.SplashScreen;
 public class PBCE {
 	
 	public final static String _EDITOR_EXTENSION = ".jpbce"; 
-	public final static String _VERSION_STRING = "jPBCE ver 1.Beta.E (GPL) _provector";
+	public final static String _VERSION_STRING = "jPBCE ver 1.Beta.g (GPL) _provector";
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					SplashScreen dialog = new SplashScreen();
-					UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
+					UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");					
 					EditorWindow window = new EditorWindow();
 					window.editorFrame.setVisible(true);
 					
