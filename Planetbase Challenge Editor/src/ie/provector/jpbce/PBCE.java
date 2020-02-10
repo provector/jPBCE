@@ -62,6 +62,7 @@ import javax.swing.UIManager;
  * 
  * 1.0.f dev update
  * TODO:	[X] Fix typo in planetbase title
+ * TODO:	[X] ReachWelfare has now max value of 100 as per docs
  * 
  * --------------------------------------------------
  * 

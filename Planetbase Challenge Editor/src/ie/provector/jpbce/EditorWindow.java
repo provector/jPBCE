@@ -57,6 +57,8 @@ import ie.provector.jpbce.Challenge.NLHLevel;
 import ie.provector.jpbce.Challenge.PlanetClass;
 import ie.provector.jpbce.CheckedComboBox.CheckableItem;
 import ie.provector.jpbce.CheckedComboBox.CheckedComboBox;
+import ie.provector.jpbce.SpinnerEditor.SpinnerEditor;
+import ie.provector.jpbce.SpinnerEditor.SpinnerRenderer;
 import ie.provector.jpbce.struct.Entities;
 import ie.provector.jpbce.struct.HSL;
 import ie.provector.jpbce.struct.RGB;
@@ -1223,6 +1225,8 @@ public class EditorWindow {
 				return columnTypes[columnIndex];
 			}
 		});
+		TableColumn structuresNumberColumn = structuresTable.getColumnModel().getColumn(2);
+		
 		TableColumn structuresColumn = structuresTable.getColumnModel().getColumn(0);
 		scrollPane_1.setViewportView(structuresTable);
 		TableColumn sizeColumn = structuresTable.getColumnModel().getColumn(1);
