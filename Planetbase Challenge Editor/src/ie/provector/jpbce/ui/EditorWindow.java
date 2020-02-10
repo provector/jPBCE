@@ -1,4 +1,4 @@
-package ie.provector.jpbce;
+package ie.provector.jpbce.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -53,21 +53,26 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.google.gson.Gson;
 
-import ie.provector.jpbce.Challenge.NLHLevel;
-import ie.provector.jpbce.Challenge.PlanetClass;
-import ie.provector.jpbce.CheckedComboBox.CheckableItem;
-import ie.provector.jpbce.CheckedComboBox.CheckedComboBox;
-import ie.provector.jpbce.SpinnerEditor.SpinnerEditor;
-import ie.provector.jpbce.SpinnerEditor.SpinnerRenderer;
+import ie.provector.jpbce.PBCE;
+import ie.provector.jpbce.ScenarioWriter;
+import ie.provector.jpbce.Tools;
+import ie.provector.jpbce.struct.Challenge;
 import ie.provector.jpbce.struct.Entities;
 import ie.provector.jpbce.struct.HSL;
 import ie.provector.jpbce.struct.RGB;
 import ie.provector.jpbce.struct.Vector;
+import ie.provector.jpbce.struct.Challenge.NLHLevel;
+import ie.provector.jpbce.struct.Challenge.PlanetClass;
+import ie.provector.jpbce.ui.CheckedComboBox.CheckableItem;
+import ie.provector.jpbce.ui.CheckedComboBox.CheckedComboBox;
+import ie.provector.jpbce.ui.SpinnerEditor.SpinnerEditor;
+import ie.provector.jpbce.ui.SpinnerEditor.SpinnerRenderer;
+
 
 public class EditorWindow {
 	
 
-	JFrame editorFrame;
+	public JFrame editorFrame;
 	private JTextField infoField;
 	private JTextField challengeNameField;
 	private JTextField challengeFilenameField;
@@ -1187,13 +1192,15 @@ public class EditorWindow {
 			}
 		) {
 			Class<?>[] columnTypes = new Class[] {
-				Object.class, Integer.class
+				Object.class, SpinnerEditor.class
 			};
 			public Class<?> getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
 		resourcesTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(resourcesBox));
+		resourcesTable.getColumnModel().getColumn(1).setCellRenderer(new SpinnerRenderer());
+		resourcesTable.getColumnModel().getColumn(1).setCellEditor(new SpinnerEditor());
 		
 		scrollPane.setViewportView(resourcesTable);
 		internalFrame_4.getContentPane().add(lblAccumulateResources);
@@ -1219,18 +1226,19 @@ public class EditorWindow {
 			}
 		) {
 			Class<?>[] columnTypes = new Class[] {
-				Object.class, Integer.class, Object.class
+				Object.class, Integer.class, SpinnerEditor.class
 			};
 			public Class<?> getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
-		TableColumn structuresNumberColumn = structuresTable.getColumnModel().getColumn(2);
 		
 		TableColumn structuresColumn = structuresTable.getColumnModel().getColumn(0);
 		scrollPane_1.setViewportView(structuresTable);
 		TableColumn sizeColumn = structuresTable.getColumnModel().getColumn(1);
-		
+		TableColumn numberColumn = structuresTable.getColumnModel().getColumn(2);
+		numberColumn.setCellRenderer(new SpinnerRenderer());
+		numberColumn.setCellEditor(new SpinnerEditor());
 		JLabel lblBuildComponents = new JLabel("Build Components:");
 		springLayout_4.putConstraint(SpringLayout.NORTH, lblBuildComponents, 0, SpringLayout.NORTH, lblAccumulateResources);
 		internalFrame_4.getContentPane().add(lblBuildComponents);
@@ -1251,14 +1259,15 @@ public class EditorWindow {
 					}
 				) {
 					Class<?>[] columnTypes = new Class[] {
-						Object.class, Integer.class
+						Object.class, SpinnerEditor.class
 					};
 					public Class<?> getColumnClass(int columnIndex) {
 						return columnTypes[columnIndex];
 					}
 				});
 				componentsTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(componentsBox));
-				
+				componentsTable.getColumnModel().getColumn(1).setCellRenderer(new SpinnerRenderer());
+				componentsTable.getColumnModel().getColumn(1).setCellEditor(new SpinnerEditor());
 				scrollPane_2.setViewportView(componentsTable);
 				
 				JLabel lblKeepCharacterAlive = new JLabel("Keep Character Alive:");
@@ -1310,13 +1319,15 @@ public class EditorWindow {
 					}
 				) {
 					Class<?>[] columnTypes = new Class[] {
-						Object.class, Integer.class
+						Object.class, SpinnerEditor.class
 					};
 					public Class<?> getColumnClass(int columnIndex) {
 						return columnTypes[columnIndex];
 					}
 				});
 				specializationTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(specializationsBox));
+				specializationTable.getColumnModel().getColumn(1).setCellRenderer(new SpinnerRenderer());
+				specializationTable.getColumnModel().getColumn(1).setCellEditor(new SpinnerEditor());
 				scrollPane_4.setViewportView(specializationTable);
 				
 				JButton btnNewButton = new JButton("");
@@ -1324,7 +1335,7 @@ public class EditorWindow {
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						DefaultTableModel model = (DefaultTableModel) structuresTable.getModel();
-						model.addRow(new Object[][] {null,null});
+						model.addRow(new Object[] {null,"0 - Any",new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1))});
 					}
 				});
 				springLayout_4.putConstraint(SpringLayout.SOUTH, btnNewButton, 0, SpringLayout.SOUTH, reachPopulationCheckBox);
@@ -1350,7 +1361,7 @@ public class EditorWindow {
 				btnNewButton_2.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						DefaultTableModel model = (DefaultTableModel) resourcesTable.getModel();
-						model.addRow(new Object[][] {null,null});
+						model.addRow(new Object[] {null,new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1))});
 					}
 				});
 				btnNewButton_2.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
@@ -1377,7 +1388,7 @@ public class EditorWindow {
 				btnNewButton_4.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						DefaultTableModel model = (DefaultTableModel) componentsTable.getModel();
-						model.addRow(new Object[][] {null,null});
+						model.addRow(new Object[] {null,new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1))});
 					}
 				});
 				btnNewButton_4.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
@@ -1431,7 +1442,7 @@ public class EditorWindow {
 				btnNewButton_8.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						DefaultTableModel model = (DefaultTableModel) specializationTable.getModel();
-						model.addRow(new Object[][] {null,null});
+						model.addRow(new Object[] {null,new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1))});
 					}
 				});
 				btnNewButton_8.setIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/tree_collapsed_14x14.png")));
@@ -3426,17 +3437,8 @@ public class EditorWindow {
 				}
 				String resourceName = resourcesModel.getValueAt(row,0).toString();
 				if(resourcesModel.getValueAt(row, 1)!=null) {
-					String valueStr = resourcesModel.getValueAt(row,1).toString();
-					if(isNumber(valueStr)) {
-						int value = Integer.parseInt(valueStr);
-						if(value<1) {
-							return "ERROR: Expected Int > 0. Table 'resource' Column 1";
-						}else {
-							resourceObjectives.put(resourceName,value);
-						}
-					}else {
-						return "ERROR: Expected numeric Value. Table 'resource' Column 1";
-					}
+					int value = (Integer)((SpinnerNumberModel) resourcesModel.getValueAt(row,1)).getValue();
+					resourceObjectives.put(resourceName, value);					
 				}else {
 					return "ERROR:  Table 'resource' Column 1 Not Ready (press Enter on cell) / or empty";
 				}
@@ -3448,81 +3450,63 @@ public class EditorWindow {
 		//Components Table
 		TableModel componentModel = componentsTable.getModel();
 		if(componentModel.getRowCount()>0) {
-			HashMap<String,Integer> objectives = new HashMap<>();
+			HashMap<String,Integer> componentObjectives = new HashMap<>();
 			for(int row = 0;row < componentModel.getRowCount(); row++) {
 				if(componentModel.getValueAt(row, 0)==null) {
 					return "ERROR: Empty Table Field. Table 'component' Column 0";
 				}
 				String name = componentModel.getValueAt(row,0).toString();
 				if(componentModel.getValueAt(row, 1)!=null) {
-					String valueStr = componentModel.getValueAt(row,1).toString();
-					if(isNumber(valueStr)) {
-						int value = Integer.parseInt(valueStr);
-						if(value<1) {
-							return "ERROR: Expected Int > 0. Table 'component' Column 1";
-						}else {
-							objectives.put(name,value);
-						}
-					}else {
-						return "ERROR: Expected numeric Value. Table 'component' Column 1";
-					}
+					int value = (Integer)((SpinnerNumberModel) componentModel.getValueAt(row,1)).getValue();
+					componentObjectives.put(name, value);
 				}else {
 					return "ERROR:  Table 'component' Column 1 Not Ready (press Enter on cell) / or empty";
 				}
 				
 			}//endFOR
-			_CC.setBuildComponents(objectives);
+			_CC.setBuildComponents(componentObjectives);
 		}//endIF
 		
 		//Specialization table
 		TableModel specializationModel = specializationTable.getModel();
 		if(specializationModel.getRowCount()>0) {
-			HashMap<String,Integer> objectives = new HashMap<>();
+			HashMap<String,Integer> specializationObjectives = new HashMap<>();
 			for(int row = 0;row < specializationModel.getRowCount(); row++) {
 				if(specializationModel.getValueAt(row, 0)==null) {
 					return "ERROR: Empty Table Field. Table 'specialization' Column 0";
 				}
 				String name = specializationModel.getValueAt(row,0).toString();
 				if(specializationModel.getValueAt(row, 1)!=null) {
-					String valueStr = specializationModel.getValueAt(row,1).toString();
-					if(isNumber(valueStr)) {
-						int value = Integer.parseInt(valueStr);
-						if(value<1) {
-							return "ERROR: Expected Int > 0. Table 'specialization' Column 1";
-						}else {
-							objectives.put(name,value);
-						}
-					}else {
-						return "ERROR: Expected numeric Value. Table 'specialization' Column 1";
-					}
+					int value = (Integer)((SpinnerNumberModel) specializationModel.getValueAt(row,1)).getValue();
+					specializationObjectives.put(name, value);					
 				}else {
 					return "ERROR:  Table 'specialization' Column 1 Not Ready (press Enter on cell) / or empty";
 				}
 				
 			}//endFOR
-			_CC.setReachSpecialization(objectives);
+			_CC.setReachSpecialization(specializationObjectives);
 		}//endIF
 		
 		//CharacterTable
 		TableModel characterModel = characterTable.getModel();
 		if(characterModel.getRowCount()>0) {
-			ArrayList<String> objectives = new ArrayList<>();
+			ArrayList<String> characterObjectives = new ArrayList<>();
 			for(int row = 0;row<characterModel.getRowCount();row++) {
-				String name = characterModel.getValueAt(row, 0).toString();
-				if(name.isEmpty()) {
+				String name = (String) characterModel.getValueAt(row, 0);
+				if(name==null) {
 					return "ERROR: Empty String. Table 'character'.";
 				}else {
-					objectives.add(name);
+					characterObjectives.add(name);
 				}
 				
 			}//endFOR
-			_CC.setKeepCharacterAlive(objectives);
+			_CC.setKeepCharacterAlive(characterObjectives);
 		}//endIF
 		
 		//Structures Table
 		TableModel structureModel = structuresTable.getModel();
 		if(structureModel.getRowCount()>0) {
-			HashMap<String,Integer[]> objectives = new HashMap<>();
+			HashMap<String,Integer[]> structureObjectives = new HashMap<>();
 			for(int row = 0;row<structureModel.getRowCount();row++) {
 				if(structureModel.getValueAt(row,0)==null) {
 					return "ERROR: Empty Table Field! Table 'structure' Column 0";
@@ -3534,24 +3518,15 @@ public class EditorWindow {
 				}
 				values[0] = Integer.parseInt(structureModel.getValueAt(row,1).toString().replaceAll(" - Any",""));
 				if(structureModel.getValueAt(row, 2)!=null) {
-					String valueStr = structureModel.getValueAt(row, 2).toString();
-					if(isNumber(valueStr)) {
-						int value = Integer.parseInt(valueStr);
-						if(value<1) {
-							return "ERROR: Expected Int > 0. Table 'structure' Column 2";
-						}else {
-							values[1] = value;
-							objectives.put(name,values);
-						}
-					}else {
-						return "ERROR: Expected numeric Value. Table 'structure' Column 2";
-					}
+					int value = (Integer)((SpinnerNumberModel) structureModel.getValueAt(row,2)).getValue();
+					values[1] = value;
+					structureObjectives.put(name, values);
 				}else {
 					return "ERROR: Table 'structure' Column 2 Not Ready (press Enter on cell) / or empty";
 				}
 				
 			}//endFOR
-			_CC.setBuildStructures(objectives);
+			_CC.setBuildStructures(structureObjectives);
 		}//endIF
 		
 		return "All Good!";

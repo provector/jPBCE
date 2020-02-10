@@ -1,11 +1,7 @@
-package ie.provector.jpbce;
+package ie.provector.jpbce.struct;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import ie.provector.jpbce.struct.HSL;
-import ie.provector.jpbce.struct.RGB;
-import ie.provector.jpbce.struct.Vector;
 
 public class Challenge {
 	

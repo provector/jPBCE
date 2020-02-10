@@ -1,4 +1,4 @@
-package ie.provector.jpbce;
+package ie.provector.jpbce.ui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

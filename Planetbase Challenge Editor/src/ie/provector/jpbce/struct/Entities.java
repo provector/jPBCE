@@ -1,6 +1,6 @@
 package ie.provector.jpbce.struct;
 
-import ie.provector.jpbce.CheckedComboBox.*;
+import ie.provector.jpbce.ui.CheckedComboBox.CheckableItem;
 
 public class Entities {
 	

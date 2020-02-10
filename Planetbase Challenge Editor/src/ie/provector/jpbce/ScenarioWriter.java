@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import ie.provector.jpbce.struct.Challenge;
 import ie.provector.jpbce.struct.HSL;
 import ie.provector.jpbce.struct.RGB;
 import ie.provector.jpbce.struct.Vector;

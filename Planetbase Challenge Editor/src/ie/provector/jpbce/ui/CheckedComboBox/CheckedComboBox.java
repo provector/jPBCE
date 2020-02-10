@@ -1,4 +1,4 @@
-package ie.provector.jpbce.CheckedComboBox;
+package ie.provector.jpbce.ui.CheckedComboBox;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

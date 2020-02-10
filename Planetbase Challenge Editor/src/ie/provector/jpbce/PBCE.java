@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JDialog;
 import javax.swing.UIManager;
 
+import ie.provector.jpbce.ui.EditorWindow;
+import ie.provector.jpbce.ui.SplashScreen;
+
 /*
  * 1.0
  * --------------------------------------------------
@@ -63,6 +66,8 @@ import javax.swing.UIManager;
  * 1.0.f dev update
  * TODO:	[X] Fix typo in planetbase title
  * TODO:	[X] ReachWelfare has now max value of 100 as per docs
+ * TODO:	[X] Fixed bug where empty character objective field would throw a silent Exception and no error dialog
+ * TODO:	[X] Replaced Integer field in Tables with a Spinner
  * 
  * --------------------------------------------------
  * 
@@ -81,7 +86,7 @@ import javax.swing.UIManager;
 
 public class PBCE {
 	
-	final static String _EDITOR_EXTENSION = ".jpbce"; 
+	public final static String _EDITOR_EXTENSION = ".jpbce"; 
 	public final static String _VERSION_STRING = "jPBCE ver 1.Beta.E (GPL) _provector";
 	
 	public static void main(String[] args) {

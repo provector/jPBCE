@@ -1,4 +1,4 @@
-package ie.provector.jpbce.CheckedComboBox;
+package ie.provector.jpbce.ui.CheckedComboBox;
 
 public class CheckableItem {
 	 

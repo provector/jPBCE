@@ -1,4 +1,4 @@
-package ie.provector.jpbce;
+package ie.provector.jpbce.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

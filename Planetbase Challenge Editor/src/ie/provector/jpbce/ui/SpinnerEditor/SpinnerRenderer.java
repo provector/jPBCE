@@ -1,10 +1,9 @@
-package ie.provector.jpbce.SpinnerEditor;
+package ie.provector.jpbce.ui.SpinnerEditor;
 
 import java.awt.Component;
 
 import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.TableCellRenderer;
 

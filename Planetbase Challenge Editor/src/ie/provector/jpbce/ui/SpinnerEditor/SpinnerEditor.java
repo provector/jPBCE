@@ -1,4 +1,4 @@
-package ie.provector.jpbce.SpinnerEditor;
+package ie.provector.jpbce.ui.SpinnerEditor;
 
 import java.awt.Component;
 
