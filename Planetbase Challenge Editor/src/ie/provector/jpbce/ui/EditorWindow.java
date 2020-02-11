@@ -590,15 +590,16 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(drillerBotLabel);
 		
 		startCarrierSpinner = new JSpinner();
+		springLayout.putConstraint(SpringLayout.WEST, startCarrierSpinner, 7, SpringLayout.EAST, carrierBotLabel);
+		springLayout.putConstraint(SpringLayout.EAST, startCarrierSpinner, 0, SpringLayout.EAST, startConstructorSpinner);
 		startCarrierSpinner.setEnabled(false);
 		springLayout.putConstraint(SpringLayout.NORTH, startCarrierSpinner, -3, SpringLayout.NORTH, biologistLabel);
-		springLayout.putConstraint(SpringLayout.WEST, startCarrierSpinner, 7, SpringLayout.EAST, carrierBotLabel);
 		startCarrierSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		internalFrame.getContentPane().add(startCarrierSpinner);
 		
 		startDrillerSpinner = new JSpinner();
-		startDrillerSpinner.setEnabled(false);
 		springLayout.putConstraint(SpringLayout.WEST, startDrillerSpinner, 7, SpringLayout.EAST, drillerBotLabel);
+		startDrillerSpinner.setEnabled(false);
 		startDrillerSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		springLayout.putConstraint(SpringLayout.NORTH, startDrillerSpinner, -3, SpringLayout.NORTH, engineerLabel);
 		internalFrame.getContentPane().add(startDrillerSpinner);
@@ -721,59 +722,59 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(lblAlcohol);
 		
 		JLabel lblHazards = new JLabel("HAZARDS RISK:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblHazards, 15, SpringLayout.SOUTH, latitudeSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, lblHazards, -188, SpringLayout.EAST, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.NORTH, lblHazards, 5, SpringLayout.SOUTH, longtitudeSpinner);
+		springLayout.putConstraint(SpringLayout.EAST, lblHazards, 0, SpringLayout.EAST, longtitudeSpinner);
+		lblHazards.setFont(new Font("Dialog", Font.BOLD, 8));
 		internalFrame.getContentPane().add(lblHazards);
 		
 		JLabel lblSandstormRisk = new JLabel("");
-		springLayout.putConstraint(SpringLayout.EAST, startConstructorSpinner, -161, SpringLayout.WEST, lblSandstormRisk);
+		springLayout.putConstraint(SpringLayout.EAST, startConstructorSpinner, -150, SpringLayout.WEST, lblSandstormRisk);
+		springLayout.putConstraint(SpringLayout.EAST, lblSandstormRisk, -158, SpringLayout.EAST, internalFrame.getContentPane());
 		springLayout.putConstraint(SpringLayout.NORTH, lblSandstormRisk, 0, SpringLayout.NORTH, workerLabel);
 		internalFrame.getContentPane().add(lblSandstormRisk);
 		
 		sandstormRiskComboBox = new JComboBox<>();
-		springLayout.putConstraint(SpringLayout.WEST, sandstormRiskComboBox, 558, SpringLayout.WEST, internalFrame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, sandstormRiskComboBox, -10, SpringLayout.EAST, internalFrame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, lblSandstormRisk, -6, SpringLayout.WEST, sandstormRiskComboBox);
-		springLayout.putConstraint(SpringLayout.NORTH, sandstormRiskComboBox, -2, SpringLayout.NORTH, workerLabel);
+		springLayout.putConstraint(SpringLayout.NORTH, sandstormRiskComboBox, 6, SpringLayout.SOUTH, lblHazards);
+		springLayout.putConstraint(SpringLayout.WEST, sandstormRiskComboBox, 10, SpringLayout.WEST, lblSandstormRisk);
+		springLayout.putConstraint(SpringLayout.EAST, sandstormRiskComboBox, 0, SpringLayout.EAST, longtitudeSpinner);
 		sandstormRiskComboBox.setEnabled(false);
 		sandstormRiskComboBox.setToolTipText("Specifies the risk of sandstorms ");
 		sandstormRiskComboBox.setModel(new DefaultComboBoxModel<>(NLHLevel.values()));
 		internalFrame.getContentPane().add(sandstormRiskComboBox);
 		
 		meteorRiskComboBox = new JComboBox<>();
-		meteorRiskComboBox.setEnabled(false);
-		springLayout.putConstraint(SpringLayout.WEST, meteorRiskComboBox, 558, SpringLayout.WEST, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.NORTH, meteorRiskComboBox, 9, SpringLayout.SOUTH, sandstormRiskComboBox);
 		springLayout.putConstraint(SpringLayout.EAST, meteorRiskComboBox, -10, SpringLayout.EAST, internalFrame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, startCarrierSpinner, -167, SpringLayout.WEST, meteorRiskComboBox);
+		meteorRiskComboBox.setEnabled(false);
 		meteorRiskComboBox.setToolTipText("Specifies the risk of meteors ");
 		meteorRiskComboBox.setModel(new DefaultComboBoxModel<>(NLHLevel.values()));
 		internalFrame.getContentPane().add(meteorRiskComboBox);
 		
 		solareFlareRiskComboBox = new JComboBox<>();
-		solareFlareRiskComboBox.setEnabled(false);
-		springLayout.putConstraint(SpringLayout.WEST, solareFlareRiskComboBox, 558, SpringLayout.WEST, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, startDrillerSpinner, -160, SpringLayout.WEST, solareFlareRiskComboBox);
 		springLayout.putConstraint(SpringLayout.EAST, solareFlareRiskComboBox, -10, SpringLayout.EAST, internalFrame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, startDrillerSpinner, -167, SpringLayout.WEST, solareFlareRiskComboBox);
-		springLayout.putConstraint(SpringLayout.SOUTH, meteorRiskComboBox, -6, SpringLayout.NORTH, solareFlareRiskComboBox);
+		springLayout.putConstraint(SpringLayout.NORTH, solareFlareRiskComboBox, 9, SpringLayout.SOUTH, meteorRiskComboBox);
+		solareFlareRiskComboBox.setEnabled(false);
 		solareFlareRiskComboBox.setModel(new DefaultComboBoxModel<>(NLHLevel.values()));
 		internalFrame.getContentPane().add(solareFlareRiskComboBox);
 		
 		thunderstormRiskComboBox = new JComboBox<>();
+		springLayout.putConstraint(SpringLayout.NORTH, thunderstormRiskComboBox, 6, SpringLayout.SOUTH, solareFlareRiskComboBox);
+		springLayout.putConstraint(SpringLayout.EAST, thunderstormRiskComboBox, 0, SpringLayout.EAST, longtitudeSpinner);
 		thunderstormRiskComboBox.setEnabled(false);
-		springLayout.putConstraint(SpringLayout.WEST, thunderstormRiskComboBox, 167, SpringLayout.EAST, startDrillerSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, thunderstormRiskComboBox, -10, SpringLayout.EAST, internalFrame.getContentPane());
 		thunderstormRiskComboBox.setToolTipText("Specifies the risk of thunderstorms");
-		springLayout.putConstraint(SpringLayout.SOUTH, solareFlareRiskComboBox, -6, SpringLayout.NORTH, thunderstormRiskComboBox);
 		thunderstormRiskComboBox.setModel(new DefaultComboBoxModel<>(NLHLevel.values()));
 		internalFrame.getContentPane().add(thunderstormRiskComboBox);
 		
 		JLabel lblEnergySources = new JLabel("ENERGY SOURCES:");
-		springLayout.putConstraint(SpringLayout.EAST, lblEnergySources, -188, SpringLayout.EAST, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, lblEnergySources, 0, SpringLayout.EAST, longtitudeSpinner);
+		lblEnergySources.setFont(new Font("Dialog", Font.BOLD, 8));
 		internalFrame.getContentPane().add(lblEnergySources);
 		
 		atmosphereDensityComboBox = new JComboBox<>();
+		springLayout.putConstraint(SpringLayout.SOUTH, lblEnergySources, -3, SpringLayout.NORTH, atmosphereDensityComboBox);
+		springLayout.putConstraint(SpringLayout.WEST, atmosphereDensityComboBox, 383, SpringLayout.EAST, startMetalSpinner);
 		atmosphereDensityComboBox.setEnabled(false);
-		springLayout.putConstraint(SpringLayout.WEST, atmosphereDensityComboBox, 379, SpringLayout.EAST, startMetalSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, atmosphereDensityComboBox, -10, SpringLayout.EAST, internalFrame.getContentPane());
 		atmosphereDensityComboBox.setToolTipText("Specifies whether Wind Turbines work properly or not at all in this planet");
 		springLayout.putConstraint(SpringLayout.NORTH, atmosphereDensityComboBox, 1, SpringLayout.NORTH, startMetalSpinner);
@@ -781,8 +782,8 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(atmosphereDensityComboBox);
 		
 		lightDensityComboBox = new JComboBox<>();
+		springLayout.putConstraint(SpringLayout.WEST, lightDensityComboBox, 383, SpringLayout.EAST, startBioplasticSpinner);
 		lightDensityComboBox.setEnabled(false);
-		springLayout.putConstraint(SpringLayout.WEST, lightDensityComboBox, 379, SpringLayout.EAST, startBioplasticSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, lightDensityComboBox, -10, SpringLayout.EAST, internalFrame.getContentPane());
 		lightDensityComboBox.setToolTipText("Specifies whether Solar Panels work properly or not at all in this planet");
 		springLayout.putConstraint(SpringLayout.NORTH, lightDensityComboBox, 1, SpringLayout.NORTH, startBioplasticSpinner);
@@ -790,17 +791,17 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(lightDensityComboBox);
 		
 		blizzardRiskComboBox = new JComboBox<>();
+		springLayout.putConstraint(SpringLayout.NORTH, blizzardRiskComboBox, 6, SpringLayout.SOUTH, thunderstormRiskComboBox);
+		springLayout.putConstraint(SpringLayout.EAST, blizzardRiskComboBox, -10, SpringLayout.EAST, internalFrame.getContentPane());
 		blizzardRiskComboBox.setEnabled(false);
 		blizzardRiskComboBox.setToolTipText("Specifies the risk of blizzards");
-		springLayout.putConstraint(SpringLayout.NORTH, blizzardRiskComboBox, 222, SpringLayout.NORTH, internalFrame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, blizzardRiskComboBox, -10, SpringLayout.EAST, internalFrame.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, thunderstormRiskComboBox, -6, SpringLayout.NORTH, blizzardRiskComboBox);
 		blizzardRiskComboBox.setModel(new DefaultComboBoxModel<>(NLHLevel.values()));
 		internalFrame.getContentPane().add(blizzardRiskComboBox);
 		
 		JLabel lblBlizzard = new JLabel("");
-		springLayout.putConstraint(SpringLayout.WEST, blizzardRiskComboBox, 6, SpringLayout.EAST, lblBlizzard);
-		springLayout.putConstraint(SpringLayout.NORTH, lblBlizzard, 2, SpringLayout.NORTH, blizzardRiskComboBox);
+		springLayout.putConstraint(SpringLayout.WEST, blizzardRiskComboBox, 10, SpringLayout.EAST, lblBlizzard);
+		springLayout.putConstraint(SpringLayout.WEST, thunderstormRiskComboBox, 10, SpringLayout.EAST, lblBlizzard);
+		springLayout.putConstraint(SpringLayout.NORTH, lblBlizzard, 141, SpringLayout.SOUTH, latitudeSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, lblBlizzard, 0, SpringLayout.EAST, lblSandstormRisk);
 		internalFrame.getContentPane().add(lblBlizzard);
 		
@@ -819,7 +820,7 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(missionDescriptionTextArea);
 		
 		sandstormRiskCheckBox = new JCheckBox("Sandstorm:");
-		springLayout.putConstraint(SpringLayout.NORTH, sandstormRiskCheckBox, -4, SpringLayout.NORTH, workerLabel);
+		springLayout.putConstraint(SpringLayout.NORTH, sandstormRiskCheckBox, -2, SpringLayout.NORTH, sandstormRiskComboBox);
 		springLayout.putConstraint(SpringLayout.EAST, sandstormRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		sandstormRiskCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -834,6 +835,9 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(sandstormRiskCheckBox);
 		
 		meteorRiskCheckBox = new JCheckBox("Meteor:");
+		springLayout.putConstraint(SpringLayout.WEST, meteorRiskComboBox, 10, SpringLayout.EAST, meteorRiskCheckBox);
+		springLayout.putConstraint(SpringLayout.NORTH, meteorRiskCheckBox, -2, SpringLayout.NORTH, meteorRiskComboBox);
+		springLayout.putConstraint(SpringLayout.EAST, meteorRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		meteorRiskCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(meteorRiskCheckBox.isSelected()) {
@@ -843,12 +847,13 @@ public class EditorWindow {
 				}
 			}
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, meteorRiskCheckBox, -2, SpringLayout.NORTH, meteorRiskComboBox);
-		springLayout.putConstraint(SpringLayout.EAST, meteorRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		meteorRiskCheckBox.setHorizontalTextPosition(SwingConstants.LEFT);
 		internalFrame.getContentPane().add(meteorRiskCheckBox);
 		
 		solareFlareRiskCheckBox = new JCheckBox("Solare Flare:");
+		springLayout.putConstraint(SpringLayout.WEST, solareFlareRiskComboBox, 10, SpringLayout.EAST, solareFlareRiskCheckBox);
+		springLayout.putConstraint(SpringLayout.NORTH, solareFlareRiskCheckBox, -2, SpringLayout.NORTH, solareFlareRiskComboBox);
+		springLayout.putConstraint(SpringLayout.EAST, solareFlareRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		solareFlareRiskCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(solareFlareRiskCheckBox.isSelected()) {
@@ -858,12 +863,12 @@ public class EditorWindow {
 				}
 			}
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, solareFlareRiskCheckBox, -2, SpringLayout.NORTH, solareFlareRiskComboBox);
-		springLayout.putConstraint(SpringLayout.EAST, solareFlareRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		solareFlareRiskCheckBox.setHorizontalTextPosition(SwingConstants.LEFT);
 		internalFrame.getContentPane().add(solareFlareRiskCheckBox);
 		
 		thunderstormRiskCheckBox = new JCheckBox("Thunderstorm:");
+		springLayout.putConstraint(SpringLayout.NORTH, thunderstormRiskCheckBox, -2, SpringLayout.NORTH, thunderstormRiskComboBox);
+		springLayout.putConstraint(SpringLayout.EAST, thunderstormRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		thunderstormRiskCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(thunderstormRiskCheckBox.isSelected()) {
@@ -873,14 +878,12 @@ public class EditorWindow {
 				}
 			}
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, thunderstormRiskCheckBox, -2, SpringLayout.NORTH, thunderstormRiskComboBox);
-		springLayout.putConstraint(SpringLayout.EAST, thunderstormRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		thunderstormRiskCheckBox.setHorizontalTextPosition(SwingConstants.LEFT);
 		internalFrame.getContentPane().add(thunderstormRiskCheckBox);
 		
 		blizzardRiskCheckBox = new JCheckBox(" Blizzard:");
-		springLayout.putConstraint(SpringLayout.SOUTH, blizzardRiskCheckBox, -283, SpringLayout.SOUTH, internalFrame.getContentPane());
-		springLayout.putConstraint(SpringLayout.NORTH, lblEnergySources, 6, SpringLayout.SOUTH, blizzardRiskCheckBox);
+		springLayout.putConstraint(SpringLayout.NORTH, blizzardRiskCheckBox, -2, SpringLayout.NORTH, blizzardRiskComboBox);
+		springLayout.putConstraint(SpringLayout.EAST, blizzardRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		blizzardRiskCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(blizzardRiskCheckBox.isSelected()) {
@@ -890,7 +893,6 @@ public class EditorWindow {
 				}
 			}
 		});
-		springLayout.putConstraint(SpringLayout.EAST, blizzardRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		blizzardRiskCheckBox.setHorizontalTextPosition(SwingConstants.LEFT);
 		internalFrame.getContentPane().add(blizzardRiskCheckBox);
 		
@@ -933,7 +935,7 @@ public class EditorWindow {
 		springLayout.putConstraint(SpringLayout.EAST, colonyNameField, -9, SpringLayout.EAST, internalFrame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, lblBaseName, -6, SpringLayout.WEST, colonyNameField);
 		springLayout.putConstraint(SpringLayout.SOUTH, colonyNameField, -5, SpringLayout.NORTH, latitudeSpinner);
-		colonyNameField.setText("jPBCE Colony");
+		colonyNameField.setText("JPBCE Colony");
 		colonyNameField.setToolTipText("Name of your base");
 		internalFrame.getContentPane().add(colonyNameField);
 		colonyNameField.setColumns(10);
@@ -959,17 +961,17 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(lblShortObjectiveDescription);
 		
 		objectiveDescriptionField = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, objectiveDescriptionField, 272, SpringLayout.NORTH, internalFrame.getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, lblShortObjectiveDescription, -6, SpringLayout.NORTH, objectiveDescriptionField);
+		springLayout.putConstraint(SpringLayout.NORTH, objectiveDescriptionField, 272, SpringLayout.NORTH, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, objectiveDescriptionField, 0, SpringLayout.EAST, lblBaseName);
 		objectiveDescriptionField.setText("Open Ended");
 		objectiveDescriptionField.setToolTipText("Keep it short");
 		springLayout.putConstraint(SpringLayout.WEST, objectiveDescriptionField, 6, SpringLayout.EAST, startMetalSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, objectiveDescriptionField, 0, SpringLayout.EAST, startConstructorSpinner);
 		internalFrame.getContentPane().add(objectiveDescriptionField);
 		objectiveDescriptionField.setColumns(10);
 		
 		startGuardSpinner = new JSpinner();
-		springLayout.putConstraint(SpringLayout.EAST, startGuardSpinner, -48, SpringLayout.WEST, thunderstormRiskCheckBox);
+		springLayout.putConstraint(SpringLayout.EAST, startGuardSpinner, 0, SpringLayout.EAST, startConstructorSpinner);
 		startGuardSpinner.setEnabled(false);
 		springLayout.putConstraint(SpringLayout.SOUTH, startGuardSpinner, 0, SpringLayout.SOUTH, startMedicSpinner);
 		internalFrame.getContentPane().add(startGuardSpinner);
@@ -1038,14 +1040,14 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(startingSpecializationsCheckBox);
 		
 		txtJpbceInsterstellar = new JTextField();
+		springLayout.putConstraint(SpringLayout.EAST, txtJpbceInsterstellar, -10, SpringLayout.EAST, internalFrame.getContentPane());
 		txtJpbceInsterstellar.setText("jPBCE Insterstellar");
 		springLayout.putConstraint(SpringLayout.NORTH, txtJpbceInsterstellar, 8, SpringLayout.NORTH, internalFrame.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, txtJpbceInsterstellar, 0, SpringLayout.WEST, lblHazards);
-		springLayout.putConstraint(SpringLayout.EAST, txtJpbceInsterstellar, 0, SpringLayout.EAST, longtitudeSpinner);
 		internalFrame.getContentPane().add(txtJpbceInsterstellar);
 		txtJpbceInsterstellar.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Company Name:");
+		springLayout.putConstraint(SpringLayout.WEST, txtJpbceInsterstellar, 6, SpringLayout.EAST, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel, 0, SpringLayout.NORTH, lblChallengeName);
 		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel, 0, SpringLayout.EAST, lblBaseName);
 		internalFrame.getContentPane().add(lblNewLabel);
