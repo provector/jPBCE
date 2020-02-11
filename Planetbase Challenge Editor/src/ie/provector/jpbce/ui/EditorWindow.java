@@ -69,15 +69,17 @@ import ie.provector.jpbce.ui.SpinnerEditor.SpinnerEditor;
 import ie.provector.jpbce.ui.SpinnerEditor.SpinnerRenderer;
 import ie.provector.jpbce.ui.TableButton.JTableButtonMouseListener;
 import ie.provector.jpbce.ui.TableButton.JTableButtonRenderer;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import java.awt.Dimension;
+import java.awt.Font;
 
 
 public class EditorWindow {
 	
 
 	public JFrame editorFrame;
-	private JTextField infoField;
 	private JTextField challengeNameField;
-	private JTextField challengeFilenameField;
 	private JTextField lightColorDayField;
 	private JTextField lightColorNightField;
 	private JTextField lightColorTwilightField;
@@ -263,6 +265,10 @@ public class EditorWindow {
 	private String lastEditorPath;
 	private JCheckBox startingResourcesCheckBox;
 	private JCheckBox startingSpecializationsCheckBox;
+	private JSplitPane splitPane;
+	private JTextField infoField;
+	private JTextField challengeFilenameField;
+	private JTextField txtJpbceInsterstellar;
 	
 	/**
 	 * Launch the application.
@@ -326,7 +332,7 @@ public class EditorWindow {
 		editorFrame.setResizable(false);
 		editorFrame.setTitle("PlanetBase Challenge (Mission) Editor ["+PBCE._VERSION_STRING+"]");
 		editorFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(EditorWindow.class.getResource("/ie/provector/jpbce/icons/icon16.png")));
-		editorFrame.setBounds(100, 100, 724, 658);
+		editorFrame.setBounds(100, 100, 724, 672);
 		editorFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -429,13 +435,6 @@ public class EditorWindow {
 		specializationsBox = new JComboBox<>();
 		specializationsBox.setModel(new DefaultComboBoxModel<String>(Entities.SpecializationsString));
 		
-		infoField = new JTextField();
-		infoField.setText("Just Initialized. Welcome and thank you for using :) If you like this editor please consider donating a cup of coffee.");
-		infoField.setEnabled(false);
-		infoField.setEditable(false);
-		editorFrame.getContentPane().add(infoField, BorderLayout.SOUTH);
-		infoField.setColumns(10);
-		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setFocusCycleRoot(true);
 		tabbedPane.setDoubleBuffered(true);
@@ -453,8 +452,9 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(lblChallengeName);
 		
 		challengeNameField = new JTextField();
-		challengeNameField.setText("jPBCE Editor Challenge");
 		springLayout.putConstraint(SpringLayout.WEST, challengeNameField, 6, SpringLayout.EAST, lblChallengeName);
+		springLayout.putConstraint(SpringLayout.EAST, challengeNameField, -378, SpringLayout.EAST, internalFrame.getContentPane());
+		challengeNameField.setText("jPBCE Editor Challenge");
 		challengeNameField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -464,16 +464,6 @@ public class EditorWindow {
 		});
 		internalFrame.getContentPane().add(challengeNameField);
 		challengeNameField.setColumns(10);
-		
-		challengeFilenameField = new JTextField();
-		springLayout.putConstraint(SpringLayout.EAST, challengeNameField, -10, SpringLayout.WEST, challengeFilenameField);
-		springLayout.putConstraint(SpringLayout.NORTH, challengeFilenameField, 10, SpringLayout.NORTH, internalFrame.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, challengeFilenameField, 342, SpringLayout.WEST, internalFrame.getContentPane());
-		challengeFilenameField.setEnabled(false);
-		challengeFilenameField.setEditable(false);
-		challengeFilenameField.setText("challenge_jpbce_editor_challenge.xml");
-		challengeFilenameField.setColumns(10);
-		internalFrame.getContentPane().add(challengeFilenameField);
 		
 		difficultyComboBox = new JComboBox<>();
 		springLayout.putConstraint(SpringLayout.SOUTH, challengeNameField, -6, SpringLayout.NORTH, difficultyComboBox);
@@ -500,7 +490,6 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(lblPlanetClass);
 		
 		latitudeSpinner = new JSpinner();
-		springLayout.putConstraint(SpringLayout.EAST, challengeFilenameField, 131, SpringLayout.EAST, latitudeSpinner);
 		springLayout.putConstraint(SpringLayout.NORTH, latitudeSpinner, -1, SpringLayout.NORTH, planetClassComboBox);
 		springLayout.putConstraint(SpringLayout.WEST, latitudeSpinner, 517, SpringLayout.WEST, internalFrame.getContentPane());
 		latitudeSpinner.setModel(new SpinnerNumberModel(0, -180, 180, 1));
@@ -742,10 +731,10 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(lblSandstormRisk);
 		
 		sandstormRiskComboBox = new JComboBox<>();
+		springLayout.putConstraint(SpringLayout.WEST, sandstormRiskComboBox, 558, SpringLayout.WEST, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, sandstormRiskComboBox, -10, SpringLayout.EAST, internalFrame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, lblSandstormRisk, -6, SpringLayout.WEST, sandstormRiskComboBox);
 		springLayout.putConstraint(SpringLayout.NORTH, sandstormRiskComboBox, -2, SpringLayout.NORTH, workerLabel);
-		springLayout.putConstraint(SpringLayout.WEST, sandstormRiskComboBox, 558, SpringLayout.WEST, internalFrame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, sandstormRiskComboBox, 0, SpringLayout.EAST, challengeFilenameField);
 		sandstormRiskComboBox.setEnabled(false);
 		sandstormRiskComboBox.setToolTipText("Specifies the risk of sandstorms ");
 		sandstormRiskComboBox.setModel(new DefaultComboBoxModel<>(NLHLevel.values()));
@@ -936,27 +925,27 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(lightDensityCheckBox);
 		
 		JLabel lblBaseName = new JLabel("Colony Name:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblBaseName, 6, SpringLayout.SOUTH, challengeFilenameField);
-		springLayout.putConstraint(SpringLayout.WEST, lblBaseName, 0, SpringLayout.WEST, challengeFilenameField);
+		springLayout.putConstraint(SpringLayout.NORTH, lblBaseName, 2, SpringLayout.NORTH, difficultyComboBox);
 		internalFrame.getContentPane().add(lblBaseName);
 		
 		colonyNameField = new JTextField();
-		colonyNameField.setText("JPBCE Colony");
-		colonyNameField.setToolTipText("Name of your base");
-		springLayout.putConstraint(SpringLayout.WEST, colonyNameField, 17, SpringLayout.EAST, lblBaseName);
+		springLayout.putConstraint(SpringLayout.WEST, colonyNameField, 434, SpringLayout.WEST, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, colonyNameField, -9, SpringLayout.EAST, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, lblBaseName, -6, SpringLayout.WEST, colonyNameField);
 		springLayout.putConstraint(SpringLayout.SOUTH, colonyNameField, -5, SpringLayout.NORTH, latitudeSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, colonyNameField, 1, SpringLayout.EAST, challengeFilenameField);
+		colonyNameField.setText("jPBCE Colony");
+		colonyNameField.setToolTipText("Name of your base");
 		internalFrame.getContentPane().add(colonyNameField);
 		colonyNameField.setColumns(10);
 		
 		objectiveDoneTextArea = new JTextArea();
+		springLayout.putConstraint(SpringLayout.WEST, objectiveDoneTextArea, 6, SpringLayout.EAST, startMealSpinner);
+		springLayout.putConstraint(SpringLayout.EAST, objectiveDoneTextArea, -10, SpringLayout.EAST, internalFrame.getContentPane());
 		objectiveDoneTextArea.setText("Made with jPBCE");
 		objectiveDoneTextArea.setWrapStyleWord(true);
 		objectiveDoneTextArea.setToolTipText("What player will see upon completing objectives");
 		springLayout.putConstraint(SpringLayout.NORTH, objectiveDoneTextArea, 3, SpringLayout.NORTH, startMealSpinner);
-		springLayout.putConstraint(SpringLayout.WEST, objectiveDoneTextArea, 6, SpringLayout.EAST, startSparesSpinner);
 		springLayout.putConstraint(SpringLayout.SOUTH, objectiveDoneTextArea, -25, SpringLayout.SOUTH, startMedicalSuppliesSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, objectiveDoneTextArea, 0, SpringLayout.EAST, challengeFilenameField);
 		internalFrame.getContentPane().add(objectiveDoneTextArea);
 		
 		JLabel lblObjectiveCompletedText = new JLabel("OBJECTIVE COMPLETED TEXT:");
@@ -980,13 +969,13 @@ public class EditorWindow {
 		objectiveDescriptionField.setColumns(10);
 		
 		startGuardSpinner = new JSpinner();
+		springLayout.putConstraint(SpringLayout.EAST, startGuardSpinner, -48, SpringLayout.WEST, thunderstormRiskCheckBox);
 		startGuardSpinner.setEnabled(false);
-		springLayout.putConstraint(SpringLayout.WEST, startGuardSpinner, -3, SpringLayout.WEST, challengeFilenameField);
 		springLayout.putConstraint(SpringLayout.SOUTH, startGuardSpinner, 0, SpringLayout.SOUTH, startMedicSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, startGuardSpinner, 0, SpringLayout.EAST, startConstructorSpinner);
 		internalFrame.getContentPane().add(startGuardSpinner);
 		
 		guardLabel = new JLabel("Guard:");
+		springLayout.putConstraint(SpringLayout.WEST, startGuardSpinner, 7, SpringLayout.EAST, guardLabel);
 		springLayout.putConstraint(SpringLayout.SOUTH, guardLabel, 0, SpringLayout.SOUTH, medicLabel);
 		springLayout.putConstraint(SpringLayout.EAST, guardLabel, 0, SpringLayout.EAST, challengeNameField);
 		internalFrame.getContentPane().add(guardLabel);
@@ -1047,6 +1036,19 @@ public class EditorWindow {
 		springLayout.putConstraint(SpringLayout.WEST, startingSpecializationsCheckBox, 0, SpringLayout.WEST, lblChallengeName);
 		springLayout.putConstraint(SpringLayout.SOUTH, startingSpecializationsCheckBox, -6, SpringLayout.NORTH, workerLabel);
 		internalFrame.getContentPane().add(startingSpecializationsCheckBox);
+		
+		txtJpbceInsterstellar = new JTextField();
+		txtJpbceInsterstellar.setText("jPBCE Insterstellar");
+		springLayout.putConstraint(SpringLayout.NORTH, txtJpbceInsterstellar, 8, SpringLayout.NORTH, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, txtJpbceInsterstellar, 0, SpringLayout.WEST, lblHazards);
+		springLayout.putConstraint(SpringLayout.EAST, txtJpbceInsterstellar, 0, SpringLayout.EAST, longtitudeSpinner);
+		internalFrame.getContentPane().add(txtJpbceInsterstellar);
+		txtJpbceInsterstellar.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Company Name:");
+		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel, 0, SpringLayout.NORTH, lblChallengeName);
+		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel, 0, SpringLayout.EAST, lblBaseName);
+		internalFrame.getContentPane().add(lblNewLabel);
 		
 		JInternalFrame internalFrame_4 = new JInternalFrame("Objective Settings");
 		internalFrame_4.setFrameIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/objectives16.png")));
@@ -3121,6 +3123,31 @@ public class EditorWindow {
 		springLayout_3.putConstraint(SpringLayout.EAST, sideRocksField, 0, SpringLayout.EAST, heightOffsetSpinner);
 		internalFrame_3.getContentPane().add(sideRocksField);
 		sideRocksField.setColumns(10);
+		
+		JPanel southPanel = new JPanel();
+		editorFrame.getContentPane().add(southPanel, BorderLayout.SOUTH);
+		southPanel.setLayout(new BorderLayout(0, 0));
+		
+		splitPane = new JSplitPane();
+		splitPane.setResizeWeight(0.5);
+		southPanel.add(splitPane, BorderLayout.NORTH);
+		
+		infoField = new JTextField();
+		infoField.setFont(new Font("Consolas", Font.PLAIN, 12));
+		infoField.setText("Just Initialized.");
+		infoField.setToolTipText(" [Here there be proper info messages]");
+		infoField.setEditable(false);
+		splitPane.setLeftComponent(infoField);
+		infoField.setColumns(10);
+		
+		challengeFilenameField = new JTextField();
+		challengeFilenameField.setHorizontalAlignment(SwingConstants.RIGHT);
+		challengeFilenameField.setFont(new Font("Consolas", Font.PLAIN, 12));
+		challengeFilenameField.setToolTipText("Final Name of the output file");
+		challengeFilenameField.setText("challenge_jPBCE_Editor_Challenge.xml");
+		challengeFilenameField.setEditable(false);
+		splitPane.setRightComponent(challengeFilenameField);
+		challengeFilenameField.setColumns(10);
 		internalFrame_3.setVisible(true);
 		internalFrame_2.setVisible(true);
 		
