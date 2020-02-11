@@ -69,10 +69,10 @@ import ie.provector.jpbce.ui.SplashScreen;
  * TODO:	[X] Fixed bug where new objective tables couldn't be loaded from editor file
  * TODO:	[X] Fixed bug where new objective tables remove button wasn't properly loaded upon loading editor file
  * 
- * 1.0.i dev update
- * TODO: 	[ ] Add checkbox for Starting Specialization and resources to distinguish settings from default values
+ * 1.0.I Release
+ * TODO: 	[X] Add checkbox for Starting Specialization and resources to distinguish settings from default values
  * 
- * 1.0.j Release
+ * 1.0.j dev update
  * TODO:	[ ] Basic Workshop Uploading
  * TODO:	[ ] Company Support
  * TODO: 	[ ] Game days to real time indicator
@@ -106,7 +106,7 @@ import ie.provector.jpbce.ui.SplashScreen;
 public class PBCE {
 	
 	public final static String _EDITOR_EXTENSION = ".jpbce"; 
-	public final static String _VERSION_STRING = "jPBCE ver 1.Beta.g (GPL) _provector";
+	public final static String _VERSION_STRING = "jPBCE ver 1.0.I (GPL) _provector";
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

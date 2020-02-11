@@ -221,7 +221,7 @@ public class EditorWindow {
 	
 	private Challenge _CC;
 	private JSpinner startBioplasticSpinner;
-	private JSpinner startCoinsSpinner;
+	private JSpinner startCreditsSpinner;
 	private JTextArea missionDescriptionTextArea;
 	private JCheckBox tradingShipFrequencyCheckBox;
 	private JLabel xLabel;
@@ -255,12 +255,14 @@ public class EditorWindow {
 	
 	private About aboutDialog;
 	private JSpinner startGuardSpinner;
-	private JLabel lblGuard;
+	private JLabel guardLabel;
 	private JTextField languageField;
 	private JCheckBox languageCheckBox;
 	
 	private String lastSaveToPath;
 	private String lastEditorPath;
+	private JCheckBox startingResourcesCheckBox;
+	private JCheckBox startingSpecializationsCheckBox;
 	
 	/**
 	 * Launch the application.
@@ -523,39 +525,36 @@ public class EditorWindow {
 		springLayout.putConstraint(SpringLayout.NORTH, longtitudeSpinner, -1, SpringLayout.NORTH, planetClassComboBox);
 		internalFrame.getContentPane().add(longtitudeSpinner);
 		
-		JLabel lblStartingSpecializations = new JLabel("STARTING SPECIALIZATIONS:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblStartingSpecializations, 18, SpringLayout.SOUTH, lblPlanetClass);
-		springLayout.putConstraint(SpringLayout.WEST, lblStartingSpecializations, 0, SpringLayout.WEST, lblChallengeName);
-		internalFrame.getContentPane().add(lblStartingSpecializations);
+		JLabel workerLabel = new JLabel("Worker:");
+		springLayout.putConstraint(SpringLayout.NORTH, workerLabel, 38, SpringLayout.SOUTH, planetClassComboBox);
+		springLayout.putConstraint(SpringLayout.EAST, workerLabel, -596, SpringLayout.EAST, internalFrame.getContentPane());
+		internalFrame.getContentPane().add(workerLabel);
 		
-		JLabel lblWorker = new JLabel("Worker:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblWorker, 6, SpringLayout.SOUTH, lblStartingSpecializations);
-		springLayout.putConstraint(SpringLayout.EAST, lblWorker, -596, SpringLayout.EAST, internalFrame.getContentPane());
-		internalFrame.getContentPane().add(lblWorker);
+		JLabel biologistLabel = new JLabel("Biologist:");
+		springLayout.putConstraint(SpringLayout.NORTH, biologistLabel, 15, SpringLayout.SOUTH, workerLabel);
+		springLayout.putConstraint(SpringLayout.WEST, biologistLabel, 52, SpringLayout.WEST, lblChallengeName);
+		springLayout.putConstraint(SpringLayout.EAST, biologistLabel, 0, SpringLayout.EAST, workerLabel);
+		internalFrame.getContentPane().add(biologistLabel);
 		
-		JLabel lblBiologist = new JLabel("Biologist:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblBiologist, 15, SpringLayout.SOUTH, lblWorker);
-		springLayout.putConstraint(SpringLayout.WEST, lblBiologist, 52, SpringLayout.WEST, lblChallengeName);
-		springLayout.putConstraint(SpringLayout.EAST, lblBiologist, 0, SpringLayout.EAST, lblWorker);
-		internalFrame.getContentPane().add(lblBiologist);
+		JLabel engineerLabel = new JLabel("Engineer:");
+		springLayout.putConstraint(SpringLayout.NORTH, engineerLabel, 12, SpringLayout.SOUTH, biologistLabel);
+		springLayout.putConstraint(SpringLayout.EAST, engineerLabel, 0, SpringLayout.EAST, workerLabel);
+		internalFrame.getContentPane().add(engineerLabel);
 		
-		JLabel lblEngineer = new JLabel("Engineer:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblEngineer, 12, SpringLayout.SOUTH, lblBiologist);
-		springLayout.putConstraint(SpringLayout.EAST, lblEngineer, 0, SpringLayout.EAST, lblWorker);
-		internalFrame.getContentPane().add(lblEngineer);
-		
-		JLabel lblMedic = new JLabel("Medic:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblMedic, 12, SpringLayout.SOUTH, lblEngineer);
-		springLayout.putConstraint(SpringLayout.EAST, lblMedic, 0, SpringLayout.EAST, lblWorker);
-		internalFrame.getContentPane().add(lblMedic);
+		JLabel medicLabel = new JLabel("Medic:");
+		springLayout.putConstraint(SpringLayout.NORTH, medicLabel, 12, SpringLayout.SOUTH, engineerLabel);
+		springLayout.putConstraint(SpringLayout.EAST, medicLabel, 0, SpringLayout.EAST, workerLabel);
+		internalFrame.getContentPane().add(medicLabel);
 		
 		startWorkerSpinner = new JSpinner();
-		springLayout.putConstraint(SpringLayout.NORTH, startWorkerSpinner, 6, SpringLayout.SOUTH, lblStartingSpecializations);
+		startWorkerSpinner.setEnabled(false);
+		springLayout.putConstraint(SpringLayout.NORTH, startWorkerSpinner, 38, SpringLayout.SOUTH, planetClassComboBox);
 		springLayout.putConstraint(SpringLayout.WEST, startWorkerSpinner, 120, SpringLayout.WEST, internalFrame.getContentPane());
 		startWorkerSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		internalFrame.getContentPane().add(startWorkerSpinner);
 		
 		startBiologistSpinner = new JSpinner();
+		startBiologistSpinner.setEnabled(false);
 		springLayout.putConstraint(SpringLayout.NORTH, startBiologistSpinner, 6, SpringLayout.SOUTH, startWorkerSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, startBiologistSpinner, -531, SpringLayout.EAST, internalFrame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, startWorkerSpinner, 0, SpringLayout.EAST, startBiologistSpinner);
@@ -564,6 +563,7 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(startBiologistSpinner);
 		
 		startEngineerSpinner = new JSpinner();
+		startEngineerSpinner.setEnabled(false);
 		springLayout.putConstraint(SpringLayout.NORTH, startEngineerSpinner, 6, SpringLayout.SOUTH, startBiologistSpinner);
 		springLayout.putConstraint(SpringLayout.WEST, startEngineerSpinner, 120, SpringLayout.WEST, internalFrame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, startEngineerSpinner, -531, SpringLayout.EAST, internalFrame.getContentPane());
@@ -571,6 +571,7 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(startEngineerSpinner);
 		
 		startMedicSpinner = new JSpinner();
+		startMedicSpinner.setEnabled(false);
 		springLayout.putConstraint(SpringLayout.NORTH, startMedicSpinner, 6, SpringLayout.SOUTH, startEngineerSpinner);
 		springLayout.putConstraint(SpringLayout.WEST, startMedicSpinner, 120, SpringLayout.WEST, internalFrame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, startMedicSpinner, -531, SpringLayout.EAST, internalFrame.getContentPane());
@@ -578,69 +579,72 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(startMedicSpinner);
 		
 		startConstructorSpinner = new JSpinner();
-		springLayout.putConstraint(SpringLayout.NORTH, startConstructorSpinner, -3, SpringLayout.NORTH, lblWorker);
+		startConstructorSpinner.setEnabled(false);
+		springLayout.putConstraint(SpringLayout.NORTH, startConstructorSpinner, -3, SpringLayout.NORTH, workerLabel);
 		startConstructorSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		internalFrame.getContentPane().add(startConstructorSpinner);
 		
-		JLabel lblConstructorBot = new JLabel("Constructor Bot:");
-		springLayout.putConstraint(SpringLayout.WEST, startConstructorSpinner, 7, SpringLayout.EAST, lblConstructorBot);
-		springLayout.putConstraint(SpringLayout.NORTH, lblConstructorBot, 0, SpringLayout.NORTH, lblWorker);
-		springLayout.putConstraint(SpringLayout.EAST, lblConstructorBot, 0, SpringLayout.EAST, challengeNameField);
-		internalFrame.getContentPane().add(lblConstructorBot);
+		JLabel constructorBotLabel = new JLabel("Constructor Bot:");
+		springLayout.putConstraint(SpringLayout.WEST, startConstructorSpinner, 7, SpringLayout.EAST, constructorBotLabel);
+		springLayout.putConstraint(SpringLayout.NORTH, constructorBotLabel, 0, SpringLayout.NORTH, workerLabel);
+		springLayout.putConstraint(SpringLayout.EAST, constructorBotLabel, 0, SpringLayout.EAST, challengeNameField);
+		internalFrame.getContentPane().add(constructorBotLabel);
 		
-		JLabel lblCarrierBot = new JLabel("Carrier Bot:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblCarrierBot, 0, SpringLayout.NORTH, lblBiologist);
-		springLayout.putConstraint(SpringLayout.EAST, lblCarrierBot, 0, SpringLayout.EAST, challengeNameField);
-		internalFrame.getContentPane().add(lblCarrierBot);
+		JLabel carrierBotLabel = new JLabel("Carrier Bot:");
+		springLayout.putConstraint(SpringLayout.NORTH, carrierBotLabel, 0, SpringLayout.NORTH, biologistLabel);
+		springLayout.putConstraint(SpringLayout.EAST, carrierBotLabel, 0, SpringLayout.EAST, challengeNameField);
+		internalFrame.getContentPane().add(carrierBotLabel);
 		
-		JLabel lblDrillerBot = new JLabel("Driller Bot:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblDrillerBot, 0, SpringLayout.NORTH, lblEngineer);
-		springLayout.putConstraint(SpringLayout.EAST, lblDrillerBot, 0, SpringLayout.EAST, challengeNameField);
-		internalFrame.getContentPane().add(lblDrillerBot);
+		JLabel drillerBotLabel = new JLabel("Driller Bot:");
+		springLayout.putConstraint(SpringLayout.NORTH, drillerBotLabel, 0, SpringLayout.NORTH, engineerLabel);
+		springLayout.putConstraint(SpringLayout.EAST, drillerBotLabel, 0, SpringLayout.EAST, challengeNameField);
+		internalFrame.getContentPane().add(drillerBotLabel);
 		
 		startCarrierSpinner = new JSpinner();
-		springLayout.putConstraint(SpringLayout.NORTH, startCarrierSpinner, -3, SpringLayout.NORTH, lblBiologist);
-		springLayout.putConstraint(SpringLayout.WEST, startCarrierSpinner, 7, SpringLayout.EAST, lblCarrierBot);
+		startCarrierSpinner.setEnabled(false);
+		springLayout.putConstraint(SpringLayout.NORTH, startCarrierSpinner, -3, SpringLayout.NORTH, biologistLabel);
+		springLayout.putConstraint(SpringLayout.WEST, startCarrierSpinner, 7, SpringLayout.EAST, carrierBotLabel);
 		startCarrierSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		internalFrame.getContentPane().add(startCarrierSpinner);
 		
 		startDrillerSpinner = new JSpinner();
-		springLayout.putConstraint(SpringLayout.WEST, startDrillerSpinner, 7, SpringLayout.EAST, lblDrillerBot);
+		startDrillerSpinner.setEnabled(false);
+		springLayout.putConstraint(SpringLayout.WEST, startDrillerSpinner, 7, SpringLayout.EAST, drillerBotLabel);
 		startDrillerSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		springLayout.putConstraint(SpringLayout.NORTH, startDrillerSpinner, -3, SpringLayout.NORTH, lblEngineer);
+		springLayout.putConstraint(SpringLayout.NORTH, startDrillerSpinner, -3, SpringLayout.NORTH, engineerLabel);
 		internalFrame.getContentPane().add(startDrillerSpinner);
 		
-		JLabel lblStartingResources = new JLabel("STARTING RESOURCES:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblStartingResources, 24, SpringLayout.SOUTH, startMedicSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, lblStartingResources, 0, SpringLayout.EAST, lblStartingSpecializations);
-		internalFrame.getContentPane().add(lblStartingResources);
-		
 		startMetalSpinner = new JSpinner();
+		startMetalSpinner.setEnabled(false);
 		startMetalSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		springLayout.putConstraint(SpringLayout.NORTH, startMetalSpinner, 6, SpringLayout.SOUTH, lblStartingResources);
 		springLayout.putConstraint(SpringLayout.WEST, startMetalSpinner, 120, SpringLayout.WEST, internalFrame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, startMetalSpinner, -531, SpringLayout.EAST, internalFrame.getContentPane());
 		internalFrame.getContentPane().add(startMetalSpinner);
 		
 		startBioplasticSpinner = new JSpinner();
+		startBioplasticSpinner.setEnabled(false);
+		springLayout.putConstraint(SpringLayout.NORTH, startBioplasticSpinner, 300, SpringLayout.NORTH, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, startMetalSpinner, -6, SpringLayout.NORTH, startBioplasticSpinner);
 		startBioplasticSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		springLayout.putConstraint(SpringLayout.NORTH, startBioplasticSpinner, 6, SpringLayout.SOUTH, startMetalSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, startBioplasticSpinner, -531, SpringLayout.EAST, internalFrame.getContentPane());
 		internalFrame.getContentPane().add(startBioplasticSpinner);
 		
 		startMealSpinner = new JSpinner();
+		startMealSpinner.setEnabled(false);
 		startMealSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		springLayout.putConstraint(SpringLayout.NORTH, startMealSpinner, 6, SpringLayout.SOUTH, startBioplasticSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, startMealSpinner, -531, SpringLayout.EAST, internalFrame.getContentPane());
 		internalFrame.getContentPane().add(startMealSpinner);
 		
 		startSparesSpinner = new JSpinner();
+		startSparesSpinner.setEnabled(false);
 		startSparesSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		springLayout.putConstraint(SpringLayout.NORTH, startSparesSpinner, 6, SpringLayout.SOUTH, startMealSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, startSparesSpinner, -531, SpringLayout.EAST, internalFrame.getContentPane());
 		internalFrame.getContentPane().add(startSparesSpinner);
 		
 		startMedicalSuppliesSpinner = new JSpinner();
+		startMedicalSuppliesSpinner.setEnabled(false);
 		startMedicalSuppliesSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		springLayout.putConstraint(SpringLayout.NORTH, startMedicalSuppliesSpinner, 6, SpringLayout.SOUTH, startSparesSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, startMedicalSuppliesSpinner, -531, SpringLayout.EAST, internalFrame.getContentPane());
@@ -654,40 +658,43 @@ public class EditorWindow {
 		JLabel lblBioplastic = new JLabel("Bioplastic:");
 		springLayout.putConstraint(SpringLayout.WEST, startBioplasticSpinner, 6, SpringLayout.EAST, lblBioplastic);
 		springLayout.putConstraint(SpringLayout.NORTH, lblBioplastic, 3, SpringLayout.NORTH, startBioplasticSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, lblBioplastic, 0, SpringLayout.EAST, lblWorker);
+		springLayout.putConstraint(SpringLayout.EAST, lblBioplastic, 0, SpringLayout.EAST, workerLabel);
 		internalFrame.getContentPane().add(lblBioplastic);
 		
 		JLabel lblMeal = new JLabel("Meal:");
 		springLayout.putConstraint(SpringLayout.WEST, startMealSpinner, 6, SpringLayout.EAST, lblMeal);
 		springLayout.putConstraint(SpringLayout.NORTH, lblMeal, 3, SpringLayout.NORTH, startMealSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, lblMeal, 0, SpringLayout.EAST, lblWorker);
+		springLayout.putConstraint(SpringLayout.EAST, lblMeal, 0, SpringLayout.EAST, workerLabel);
 		internalFrame.getContentPane().add(lblMeal);
 		
 		JLabel lblSpares = new JLabel("Spares:");
 		springLayout.putConstraint(SpringLayout.WEST, startSparesSpinner, 6, SpringLayout.EAST, lblSpares);
 		springLayout.putConstraint(SpringLayout.NORTH, lblSpares, 3, SpringLayout.NORTH, startSparesSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, lblSpares, 0, SpringLayout.EAST, lblWorker);
+		springLayout.putConstraint(SpringLayout.EAST, lblSpares, 0, SpringLayout.EAST, workerLabel);
 		internalFrame.getContentPane().add(lblSpares);
 		
 		JLabel lblMedical = new JLabel("Medical:");
 		springLayout.putConstraint(SpringLayout.WEST, startMedicalSuppliesSpinner, 6, SpringLayout.EAST, lblMedical);
 		springLayout.putConstraint(SpringLayout.NORTH, lblMedical, 3, SpringLayout.NORTH, startMedicalSuppliesSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, lblMedical, 0, SpringLayout.EAST, lblWorker);
+		springLayout.putConstraint(SpringLayout.EAST, lblMedical, 0, SpringLayout.EAST, workerLabel);
 		internalFrame.getContentPane().add(lblMedical);
 		
-		startCoinsSpinner = new JSpinner();
-		startCoinsSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		springLayout.putConstraint(SpringLayout.NORTH, startCoinsSpinner, 6, SpringLayout.SOUTH, startMedicalSuppliesSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, startCoinsSpinner, -531, SpringLayout.EAST, internalFrame.getContentPane());
-		internalFrame.getContentPane().add(startCoinsSpinner);
+		startCreditsSpinner = new JSpinner();
+		startCreditsSpinner.setEnabled(false);
+		startCreditsSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		springLayout.putConstraint(SpringLayout.NORTH, startCreditsSpinner, 6, SpringLayout.SOUTH, startMedicalSuppliesSpinner);
+		springLayout.putConstraint(SpringLayout.EAST, startCreditsSpinner, -531, SpringLayout.EAST, internalFrame.getContentPane());
+		internalFrame.getContentPane().add(startCreditsSpinner);
 		
 		startSemiconductorsSpinner = new JSpinner();
+		startSemiconductorsSpinner.setEnabled(false);
 		startSemiconductorsSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		springLayout.putConstraint(SpringLayout.NORTH, startSemiconductorsSpinner, 6, SpringLayout.SOUTH, startCoinsSpinner);
+		springLayout.putConstraint(SpringLayout.NORTH, startSemiconductorsSpinner, 6, SpringLayout.SOUTH, startCreditsSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, startSemiconductorsSpinner, -531, SpringLayout.EAST, internalFrame.getContentPane());
 		internalFrame.getContentPane().add(startSemiconductorsSpinner);
 		
 		startGunSpinner = new JSpinner();
+		startGunSpinner.setEnabled(false);
 		startGunSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		springLayout.putConstraint(SpringLayout.NORTH, startGunSpinner, 6, SpringLayout.SOUTH, startSemiconductorsSpinner);
 		springLayout.putConstraint(SpringLayout.WEST, startGunSpinner, 120, SpringLayout.WEST, internalFrame.getContentPane());
@@ -695,23 +702,24 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(startGunSpinner);
 		
 		JLabel lblCredits = new JLabel("Credits:");
-		springLayout.putConstraint(SpringLayout.WEST, startCoinsSpinner, 6, SpringLayout.EAST, lblCredits);
-		springLayout.putConstraint(SpringLayout.NORTH, lblCredits, 3, SpringLayout.NORTH, startCoinsSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, lblCredits, 0, SpringLayout.EAST, lblWorker);
+		springLayout.putConstraint(SpringLayout.WEST, startCreditsSpinner, 6, SpringLayout.EAST, lblCredits);
+		springLayout.putConstraint(SpringLayout.NORTH, lblCredits, 3, SpringLayout.NORTH, startCreditsSpinner);
+		springLayout.putConstraint(SpringLayout.EAST, lblCredits, 0, SpringLayout.EAST, workerLabel);
 		internalFrame.getContentPane().add(lblCredits);
 		
 		JLabel lblSemiconductors = new JLabel("Semiconductors:");
 		springLayout.putConstraint(SpringLayout.WEST, startSemiconductorsSpinner, 6, SpringLayout.EAST, lblSemiconductors);
 		springLayout.putConstraint(SpringLayout.NORTH, lblSemiconductors, 3, SpringLayout.NORTH, startSemiconductorsSpinner);
-		springLayout.putConstraint(SpringLayout.EAST, lblSemiconductors, 0, SpringLayout.EAST, lblWorker);
+		springLayout.putConstraint(SpringLayout.EAST, lblSemiconductors, 0, SpringLayout.EAST, workerLabel);
 		internalFrame.getContentPane().add(lblSemiconductors);
 		
 		JLabel lblGuns = new JLabel("Guns:");
 		springLayout.putConstraint(SpringLayout.NORTH, lblGuns, 12, SpringLayout.SOUTH, lblSemiconductors);
-		springLayout.putConstraint(SpringLayout.EAST, lblGuns, 0, SpringLayout.EAST, lblWorker);
+		springLayout.putConstraint(SpringLayout.EAST, lblGuns, 0, SpringLayout.EAST, workerLabel);
 		internalFrame.getContentPane().add(lblGuns);
 		
 		startAlcoholicDrinkSpinner = new JSpinner();
+		startAlcoholicDrinkSpinner.setEnabled(false);
 		springLayout.putConstraint(SpringLayout.NORTH, startAlcoholicDrinkSpinner, 6, SpringLayout.SOUTH, startGunSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, startAlcoholicDrinkSpinner, 0, SpringLayout.EAST, startWorkerSpinner);
 		startAlcoholicDrinkSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
@@ -720,22 +728,22 @@ public class EditorWindow {
 		JLabel lblAlcohol = new JLabel("Alcohol:");
 		springLayout.putConstraint(SpringLayout.NORTH, lblAlcohol, 12, SpringLayout.SOUTH, lblGuns);
 		springLayout.putConstraint(SpringLayout.WEST, startAlcoholicDrinkSpinner, 6, SpringLayout.EAST, lblAlcohol);
-		springLayout.putConstraint(SpringLayout.EAST, lblAlcohol, 0, SpringLayout.EAST, lblWorker);
+		springLayout.putConstraint(SpringLayout.EAST, lblAlcohol, 0, SpringLayout.EAST, workerLabel);
 		internalFrame.getContentPane().add(lblAlcohol);
 		
 		JLabel lblHazards = new JLabel("HAZARDS RISK:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblHazards, 0, SpringLayout.NORTH, lblStartingSpecializations);
+		springLayout.putConstraint(SpringLayout.NORTH, lblHazards, 15, SpringLayout.SOUTH, latitudeSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, lblHazards, -188, SpringLayout.EAST, internalFrame.getContentPane());
 		internalFrame.getContentPane().add(lblHazards);
 		
 		JLabel lblSandstormRisk = new JLabel("");
 		springLayout.putConstraint(SpringLayout.EAST, startConstructorSpinner, -161, SpringLayout.WEST, lblSandstormRisk);
-		springLayout.putConstraint(SpringLayout.NORTH, lblSandstormRisk, 0, SpringLayout.NORTH, lblWorker);
+		springLayout.putConstraint(SpringLayout.NORTH, lblSandstormRisk, 0, SpringLayout.NORTH, workerLabel);
 		internalFrame.getContentPane().add(lblSandstormRisk);
 		
 		sandstormRiskComboBox = new JComboBox<>();
 		springLayout.putConstraint(SpringLayout.EAST, lblSandstormRisk, -6, SpringLayout.WEST, sandstormRiskComboBox);
-		springLayout.putConstraint(SpringLayout.NORTH, sandstormRiskComboBox, -2, SpringLayout.NORTH, lblWorker);
+		springLayout.putConstraint(SpringLayout.NORTH, sandstormRiskComboBox, -2, SpringLayout.NORTH, workerLabel);
 		springLayout.putConstraint(SpringLayout.WEST, sandstormRiskComboBox, 558, SpringLayout.WEST, internalFrame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, sandstormRiskComboBox, 0, SpringLayout.EAST, challengeFilenameField);
 		sandstormRiskComboBox.setEnabled(false);
@@ -771,7 +779,6 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(thunderstormRiskComboBox);
 		
 		JLabel lblEnergySources = new JLabel("ENERGY SOURCES:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblEnergySources, 0, SpringLayout.NORTH, lblStartingResources);
 		springLayout.putConstraint(SpringLayout.EAST, lblEnergySources, -188, SpringLayout.EAST, internalFrame.getContentPane());
 		internalFrame.getContentPane().add(lblEnergySources);
 		
@@ -809,7 +816,7 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(lblBlizzard);
 		
 		JLabel lblMissionText = new JLabel("MISSION DESCRIPTION TEXT:");
-		springLayout.putConstraint(SpringLayout.WEST, lblMissionText, 5, SpringLayout.EAST, startCoinsSpinner);
+		springLayout.putConstraint(SpringLayout.WEST, lblMissionText, 5, SpringLayout.EAST, startCreditsSpinner);
 		internalFrame.getContentPane().add(lblMissionText);
 		
 		missionDescriptionTextArea = new JTextArea();
@@ -823,7 +830,7 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(missionDescriptionTextArea);
 		
 		sandstormRiskCheckBox = new JCheckBox("Sandstorm:");
-		springLayout.putConstraint(SpringLayout.NORTH, sandstormRiskCheckBox, -4, SpringLayout.NORTH, lblWorker);
+		springLayout.putConstraint(SpringLayout.NORTH, sandstormRiskCheckBox, -4, SpringLayout.NORTH, workerLabel);
 		springLayout.putConstraint(SpringLayout.EAST, sandstormRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		sandstormRiskCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -883,6 +890,8 @@ public class EditorWindow {
 		internalFrame.getContentPane().add(thunderstormRiskCheckBox);
 		
 		blizzardRiskCheckBox = new JCheckBox(" Blizzard:");
+		springLayout.putConstraint(SpringLayout.SOUTH, blizzardRiskCheckBox, -283, SpringLayout.SOUTH, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.NORTH, lblEnergySources, 6, SpringLayout.SOUTH, blizzardRiskCheckBox);
 		blizzardRiskCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(blizzardRiskCheckBox.isSelected()) {
@@ -892,7 +901,6 @@ public class EditorWindow {
 				}
 			}
 		});
-		springLayout.putConstraint(SpringLayout.SOUTH, blizzardRiskCheckBox, -6, SpringLayout.NORTH, lblEnergySources);
 		springLayout.putConstraint(SpringLayout.EAST, blizzardRiskCheckBox, 0, SpringLayout.EAST, lblSandstormRisk);
 		blizzardRiskCheckBox.setHorizontalTextPosition(SwingConstants.LEFT);
 		internalFrame.getContentPane().add(blizzardRiskCheckBox);
@@ -959,28 +967,29 @@ public class EditorWindow {
 		JLabel lblShortObjectiveDescription = new JLabel("OBJECTIVE DESCRIPTION:");
 		lblShortObjectiveDescription.setToolTipText("Keep it short");
 		springLayout.putConstraint(SpringLayout.WEST, lblShortObjectiveDescription, 0, SpringLayout.WEST, lblMissionText);
-		springLayout.putConstraint(SpringLayout.SOUTH, lblShortObjectiveDescription, 0, SpringLayout.SOUTH, lblStartingResources);
 		internalFrame.getContentPane().add(lblShortObjectiveDescription);
 		
 		objectiveDescriptionField = new JTextField();
+		springLayout.putConstraint(SpringLayout.NORTH, objectiveDescriptionField, 272, SpringLayout.NORTH, internalFrame.getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, lblShortObjectiveDescription, -6, SpringLayout.NORTH, objectiveDescriptionField);
 		objectiveDescriptionField.setText("Open Ended");
 		objectiveDescriptionField.setToolTipText("Keep it short");
-		springLayout.putConstraint(SpringLayout.NORTH, objectiveDescriptionField, 6, SpringLayout.SOUTH, lblShortObjectiveDescription);
 		springLayout.putConstraint(SpringLayout.WEST, objectiveDescriptionField, 6, SpringLayout.EAST, startMetalSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, objectiveDescriptionField, 0, SpringLayout.EAST, startConstructorSpinner);
 		internalFrame.getContentPane().add(objectiveDescriptionField);
 		objectiveDescriptionField.setColumns(10);
 		
 		startGuardSpinner = new JSpinner();
+		startGuardSpinner.setEnabled(false);
 		springLayout.putConstraint(SpringLayout.WEST, startGuardSpinner, -3, SpringLayout.WEST, challengeFilenameField);
 		springLayout.putConstraint(SpringLayout.SOUTH, startGuardSpinner, 0, SpringLayout.SOUTH, startMedicSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, startGuardSpinner, 0, SpringLayout.EAST, startConstructorSpinner);
 		internalFrame.getContentPane().add(startGuardSpinner);
 		
-		lblGuard = new JLabel("Guard:");
-		springLayout.putConstraint(SpringLayout.SOUTH, lblGuard, 0, SpringLayout.SOUTH, lblMedic);
-		springLayout.putConstraint(SpringLayout.EAST, lblGuard, 0, SpringLayout.EAST, challengeNameField);
-		internalFrame.getContentPane().add(lblGuard);
+		guardLabel = new JLabel("Guard:");
+		springLayout.putConstraint(SpringLayout.SOUTH, guardLabel, 0, SpringLayout.SOUTH, medicLabel);
+		springLayout.putConstraint(SpringLayout.EAST, guardLabel, 0, SpringLayout.EAST, challengeNameField);
+		internalFrame.getContentPane().add(guardLabel);
 		
 		languageCheckBox = new JCheckBox("Generate Additional Langugage Desc File:");
 		languageCheckBox.addActionListener(new ActionListener() {
@@ -1017,6 +1026,27 @@ public class EditorWindow {
 		springLayout.putConstraint(SpringLayout.EAST, languageField, -9, SpringLayout.EAST, internalFrame.getContentPane());
 		internalFrame.getContentPane().add(languageField);
 		languageField.setColumns(10);
+		
+		startingResourcesCheckBox = new JCheckBox("STARTING RESOURCES:");
+		startingResourcesCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchStartingResources();
+			}
+		});
+		springLayout.putConstraint(SpringLayout.WEST, startingResourcesCheckBox, 0, SpringLayout.WEST, lblChallengeName);
+		springLayout.putConstraint(SpringLayout.SOUTH, startingResourcesCheckBox, -6, SpringLayout.NORTH, lblMetial);
+		internalFrame.getContentPane().add(startingResourcesCheckBox);
+		
+		startingSpecializationsCheckBox = new JCheckBox("STARTING SPECIALIZATIONS:");
+		startingSpecializationsCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				switchStartingSpecializations();
+			}
+		});
+		startingSpecializationsCheckBox.setToolTipText("Click to customize. If UNTICKED you will start will planet class default");
+		springLayout.putConstraint(SpringLayout.WEST, startingSpecializationsCheckBox, 0, SpringLayout.WEST, lblChallengeName);
+		springLayout.putConstraint(SpringLayout.SOUTH, startingSpecializationsCheckBox, -6, SpringLayout.NORTH, workerLabel);
+		internalFrame.getContentPane().add(startingSpecializationsCheckBox);
 		
 		JInternalFrame internalFrame_4 = new JInternalFrame("Objective Settings");
 		internalFrame_4.setFrameIcon(new ImageIcon(EditorWindow.class.getResource("/ie/provector/jpbce/icons/objectives16.png")));
@@ -3171,24 +3201,51 @@ public class EditorWindow {
 		_CC.setLatitude((Integer) latitudeSpinner.getValue());
 		_CC.setLongtitude((Integer) longtitudeSpinner.getValue());
 		
-		_CC.setStartWorker((Integer) startWorkerSpinner.getValue()); 
-		_CC.setStartBiologist((Integer) startBiologistSpinner.getValue());
-		_CC.setStartEngineer((Integer) startEngineerSpinner.getValue());
-		_CC.setStartMedic((Integer) startMedicSpinner.getValue());
-		_CC.setStartGuard((Integer) startGuardSpinner.getValue());
-		_CC.setStartConstructor((Integer) startConstructorSpinner.getValue());
-		_CC.setStartCarrier((Integer) startCarrierSpinner.getValue());
-		_CC.setStartDriller((Integer) startDrillerSpinner.getValue());
+		if(startingSpecializationsCheckBox.isSelected()) {
+			_CC.setStartWorker((Integer) startWorkerSpinner.getValue()); 
+			_CC.setStartBiologist((Integer) startBiologistSpinner.getValue());
+			_CC.setStartEngineer((Integer) startEngineerSpinner.getValue());
+			_CC.setStartMedic((Integer) startMedicSpinner.getValue());
+			_CC.setStartGuard((Integer) startGuardSpinner.getValue());
+			_CC.setStartConstructor((Integer) startConstructorSpinner.getValue());
+			_CC.setStartCarrier((Integer) startCarrierSpinner.getValue());
+			_CC.setStartDriller((Integer) startDrillerSpinner.getValue());	
+		}else {
+			_CC.setStartWorker(0); 
+			_CC.setStartBiologist(0);
+			_CC.setStartEngineer(0);
+			_CC.setStartMedic(0);
+			_CC.setStartGuard(0);
+			_CC.setStartConstructor(0);
+			_CC.setStartCarrier(0);
+			_CC.setStartDriller(0);
+		}
 		
-		_CC.setStartMetal((Integer) startMetalSpinner.getValue());
-		_CC.setStartBioplastic((Integer) startBioplasticSpinner.getValue());
-		_CC.setStartMeal((Integer) startMealSpinner.getValue());
-		_CC.setStartSpares((Integer) startSparesSpinner.getValue());
-		_CC.setStartMedicalSupplies((Integer) startMedicalSuppliesSpinner.getValue());
-		_CC.setStartCoins((Integer) startCoinsSpinner.getValue());
-		_CC.setStartSemiconductors((Integer) startSemiconductorsSpinner.getValue());
-		_CC.setStartGun((Integer) startGunSpinner.getValue());
-		_CC.setStartAlcoholicDrink((Integer) startAlcoholicDrinkSpinner.getValue());
+		if(startingResourcesCheckBox.isSelected()) {
+			_CC.setStartMetal((Integer) startMetalSpinner.getValue());
+			_CC.setStartBioplastic((Integer) startBioplasticSpinner.getValue());
+			_CC.setStartMeal((Integer) startMealSpinner.getValue());
+			_CC.setStartSpares((Integer) startSparesSpinner.getValue());
+			_CC.setStartMedicalSupplies((Integer) startMedicalSuppliesSpinner.getValue());
+			_CC.setStartCoins((Integer) startCreditsSpinner.getValue());
+			_CC.setStartSemiconductors((Integer) startSemiconductorsSpinner.getValue());
+			_CC.setStartGun((Integer) startGunSpinner.getValue());
+			_CC.setStartAlcoholicDrink((Integer) startAlcoholicDrinkSpinner.getValue());
+		}else {
+			_CC.setStartMetal(0);
+			_CC.setStartBioplastic(0);
+			_CC.setStartMeal(0);
+			_CC.setStartSpares(0);
+			_CC.setStartMedicalSupplies(0);
+			_CC.setStartCoins(0);
+			_CC.setStartSemiconductors(0);
+			_CC.setStartGun(0);
+			_CC.setStartAlcoholicDrink(0);
+		}
+		
+		
+
+		
 		
 		//Translation description
 		if(languageCheckBox.isSelected() && languageField.getText().isEmpty()==false) {
@@ -3719,23 +3776,40 @@ public class EditorWindow {
 		latitudeSpinner.setValue(_cc.getLatitude());
 		longtitudeSpinner.setValue(_cc.getLongtitude());
 		
-		startWorkerSpinner.setValue(_cc.getStartWorker());
-		startBiologistSpinner.setValue(_cc.getStartBiologist());
-		startEngineerSpinner.setValue(_cc.getStartEngineer());
-		startMedicSpinner.setValue(_cc.getStartMedic());
-		startGuardSpinner.setValue(_cc.getStartGuard());
-		startMetalSpinner.setValue(_cc.getStartMetal());
-		startBioplasticSpinner.setValue(_cc.getStartBioplastic());
-		startMealSpinner.setValue(_cc.getStartMeal());
-		startSparesSpinner.setValue(_cc.getStartSpares());
-		startMedicalSuppliesSpinner.setValue(_cc.getStartMedicalSupplies());
-		startCoinsSpinner.setValue(_cc.getStartCoins());
-		startSemiconductorsSpinner.setValue(_cc.getStartSemiconductors());
-		startGunSpinner.setValue(_cc.getStartGun());
-		startAlcoholicDrinkSpinner.setValue(_cc.getStartAlcoholicDrink());
-		startConstructorSpinner.setValue(_cc.getStartConstructor());
-		startCarrierSpinner.setValue(_cc.getStartCarrier());
-		startDrillerSpinner.setValue(_cc.getStartDriller());
+			startWorkerSpinner.setValue(_cc.getStartWorker());
+			startBiologistSpinner.setValue(_cc.getStartBiologist());
+			startEngineerSpinner.setValue(_cc.getStartEngineer());
+			startMedicSpinner.setValue(_cc.getStartMedic());
+			startGuardSpinner.setValue(_cc.getStartGuard());
+			startConstructorSpinner.setValue(_cc.getStartConstructor());
+			startCarrierSpinner.setValue(_cc.getStartCarrier());
+			startDrillerSpinner.setValue(_cc.getStartDriller());
+		
+			//fastest and laziest way to check
+			int sumSpecializations = _cc.getStartWorker()+_cc.getStartBiologist()+_cc.getStartEngineer()+_cc.getStartMedic()+_cc.getStartGuard()+_cc.getStartConstructor()+_cc.getStartCarrier()+_cc.getStartDriller();
+			if(sumSpecializations>0) {
+				startingSpecializationsCheckBox.setSelected(true);
+			}else {
+				startingSpecializationsCheckBox.setSelected(false);
+			}
+			switchStartingSpecializations();
+			
+			startMetalSpinner.setValue(_cc.getStartMetal());
+			startBioplasticSpinner.setValue(_cc.getStartBioplastic());
+			startMealSpinner.setValue(_cc.getStartMeal());
+			startSparesSpinner.setValue(_cc.getStartSpares());
+			startMedicalSuppliesSpinner.setValue(_cc.getStartMedicalSupplies());
+			startCreditsSpinner.setValue(_cc.getStartCoins());
+			startSemiconductorsSpinner.setValue(_cc.getStartSemiconductors());
+			startGunSpinner.setValue(_cc.getStartGun());
+			startAlcoholicDrinkSpinner.setValue(_cc.getStartAlcoholicDrink());
+			int sumResources = _cc.getStartMetal()+_cc.getStartBioplastic()+_cc.getStartMeal()+_cc.getStartSpares()+_cc.getStartMedicalSupplies()+_cc.getStartCoins()+_cc.getStartSemiconductors()+_cc.getStartGun()+_cc.getStartAlcoholicDrink();
+			if(sumResources>0) {
+				startingResourcesCheckBox.setSelected(true);
+			}else {
+				startingResourcesCheckBox.setSelected(false);
+			}
+			switchStartingResources();
 		
 		//Translation description
 		if(_cc.getChallengeTranslationPrefix()!=null) {
@@ -4679,6 +4753,52 @@ public class EditorWindow {
 		}			
 		
 	}
+	
+	private void switchStartingResources() {
+		if(startingResourcesCheckBox.isSelected()) {
+			startMetalSpinner.setEnabled(true);
+			startBioplasticSpinner.setEnabled(true);
+			startMealSpinner.setEnabled(true);
+			startSparesSpinner.setEnabled(true);
+			startMedicalSuppliesSpinner.setEnabled(true);
+			startCreditsSpinner.setEnabled(true);
+			startSemiconductorsSpinner.setEnabled(true);
+			startGunSpinner.setEnabled(true);
+			startAlcoholicDrinkSpinner.setEnabled(true);
+		}else {
+			startMetalSpinner.setEnabled(false);
+			startBioplasticSpinner.setEnabled(false);
+			startMealSpinner.setEnabled(false);
+			startSparesSpinner.setEnabled(false);
+			startMedicalSuppliesSpinner.setEnabled(false);
+			startCreditsSpinner.setEnabled(false);
+			startSemiconductorsSpinner.setEnabled(false);
+			startGunSpinner.setEnabled(false);
+			startAlcoholicDrinkSpinner.setEnabled(false);
+		}
+	}
+	
+	private void switchStartingSpecializations() {
+		if(startingSpecializationsCheckBox.isSelected()) {
+			startWorkerSpinner.setEnabled(true);
+			startBiologistSpinner.setEnabled(true);
+			startEngineerSpinner.setEnabled(true);
+			startMedicSpinner.setEnabled(true);
+			startConstructorSpinner.setEnabled(true);
+			startCarrierSpinner.setEnabled(true);
+			startDrillerSpinner.setEnabled(true);
+			startGuardSpinner.setEnabled(true);					
+		}else {
+			startWorkerSpinner.setEnabled(false);
+			startBiologistSpinner.setEnabled(false);
+			startEngineerSpinner.setEnabled(false);
+			startMedicSpinner.setEnabled(false);
+			startConstructorSpinner.setEnabled(false);
+			startCarrierSpinner.setEnabled(false);
+			startDrillerSpinner.setEnabled(false);
+			startGuardSpinner.setEnabled(false);
+		}
+	};
 	
 	private class OpenFileFilter extends FileFilter {
 
