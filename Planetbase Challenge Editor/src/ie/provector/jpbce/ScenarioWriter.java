@@ -24,13 +24,13 @@ public class ScenarioWriter {
 	private ArrayList<String> objectives;
 	
 	Challenge CC;
+	String GROUP_ID;
 	
 	StringBuilder xml;
 	
-	private static final String GROUP_ID = "jpbce_test";
-	
 	public ScenarioWriter(Challenge challengeConfig) {
 		this.CC = challengeConfig;
+		this.GROUP_ID = CC.getGroupID();
 		xml = new StringBuilder();
 	}
 	
@@ -134,7 +134,7 @@ public class ScenarioWriter {
 		String challengeName = CC.getChallengeName().replaceAll(" ","_").toLowerCase();
 		StringBuilder en = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n");
 		en.append("<strings>\r");
-		en.append("<string name=\""+GROUP_ID+"\">jPBCE Beta</string>\r\n");
+		en.append("<string name=\""+GROUP_ID+"\">"+CC.getCompanyName()+"</string>\r\n");
 		en.append("\t<string name=\""+challengeName+"_name\">"+CC.getChallengeName()+"</string>\r\n");
 		en.append("\t<string name=\""+challengeName+"_base_name\">"+CC.getColonyNameString()+"</string>\r\n");
 		en.append("\t<string name=\""+challengeName+"_description\">"+CC.getChallengeDescriptionString()+"</string>\r\n");

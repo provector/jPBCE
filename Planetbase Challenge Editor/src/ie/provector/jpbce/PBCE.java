@@ -71,13 +71,15 @@ import ie.provector.jpbce.ui.SplashScreen;
  * 
  * 1.0.I Release
  * TODO: 	[X] Add checkbox for Starting Specialization and resources to distinguish settings from default values
- * 
+ *  
  * 1.0.j dev update
- * TODO:	[ ] Basic Workshop Uploading
- * TODO:	[ ] Company Support
- * TODO: 	[ ] Game days to real time indicator
+ * TODO:	[X] Company Support
  * 
- * 1.1.a dev
+ * 1.0.0
+ * TODO: 	[ ] Game days to real time indicator
+ * TODO:	[ ] Basic Workshop Uploading
+ *
+ * 1.0.1 
  * TODO:	[ ] CleanUp and Re-factor the code for translations
  * 			[ ] Fix UI Refresh BUG
  * 

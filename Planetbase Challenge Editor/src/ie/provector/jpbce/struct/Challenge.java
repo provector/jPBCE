@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 public class Challenge {
 	
+	private final static String DEFAULT_COMPANY_NAME = "jPBCE Interstellar";
+	
 	//Basic	
 	private String challengeFilename;	
 	private String challengeDescriptionFilename;
@@ -12,6 +14,8 @@ public class Challenge {
 	
 	private String challengeName;
 	private String colonyNameString;
+	private String companyName;
+	private String groupID;
 	private String challengeDescriptionString;
 	private String objectiveDescriptionString;
 	private String objectiveDoneString;
@@ -167,6 +171,24 @@ public class Challenge {
 	private HashMap<String,Integer[]> buildStructures;
 	
 	
+	public String getCompanyName() {
+		return this.companyName;
+	}
+	
+	public void setCompanyName(String companyName) {
+		companyName = companyName.trim();
+		if(companyName.isEmpty()) {
+			companyName = DEFAULT_COMPANY_NAME;
+		}
+		String group_id = companyName.trim().toLowerCase().replace(" ","_");
+		this.groupID = group_id;
+		this.companyName = companyName;
+		
+	}
+	
+	public String getGroupID() {
+		return this.groupID;
+	}
 	
 	public String getChallengeDescriptionString() {
 		return challengeDescriptionString;

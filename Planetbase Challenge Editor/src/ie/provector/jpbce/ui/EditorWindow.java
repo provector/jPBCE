@@ -268,7 +268,7 @@ public class EditorWindow {
 	private JSplitPane splitPane;
 	private JTextField infoField;
 	private JTextField challengeFilenameField;
-	private JTextField txtJpbceInsterstellar;
+	private JTextField companyNameField;
 	
 	/**
 	 * Launch the application.
@@ -935,7 +935,7 @@ public class EditorWindow {
 		springLayout.putConstraint(SpringLayout.EAST, colonyNameField, -9, SpringLayout.EAST, internalFrame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, lblBaseName, -6, SpringLayout.WEST, colonyNameField);
 		springLayout.putConstraint(SpringLayout.SOUTH, colonyNameField, -5, SpringLayout.NORTH, latitudeSpinner);
-		colonyNameField.setText("JPBCE Colony");
+		colonyNameField.setText("jPBCE Colony");
 		colonyNameField.setToolTipText("Name of your base");
 		internalFrame.getContentPane().add(colonyNameField);
 		colonyNameField.setColumns(10);
@@ -1039,15 +1039,15 @@ public class EditorWindow {
 		springLayout.putConstraint(SpringLayout.SOUTH, startingSpecializationsCheckBox, -6, SpringLayout.NORTH, workerLabel);
 		internalFrame.getContentPane().add(startingSpecializationsCheckBox);
 		
-		txtJpbceInsterstellar = new JTextField();
-		springLayout.putConstraint(SpringLayout.EAST, txtJpbceInsterstellar, -10, SpringLayout.EAST, internalFrame.getContentPane());
-		txtJpbceInsterstellar.setText("jPBCE Insterstellar");
-		springLayout.putConstraint(SpringLayout.NORTH, txtJpbceInsterstellar, 8, SpringLayout.NORTH, internalFrame.getContentPane());
-		internalFrame.getContentPane().add(txtJpbceInsterstellar);
-		txtJpbceInsterstellar.setColumns(10);
+		companyNameField = new JTextField();
+		springLayout.putConstraint(SpringLayout.EAST, companyNameField, -10, SpringLayout.EAST, internalFrame.getContentPane());
+		companyNameField.setText("jPBCE Insterstellar");
+		springLayout.putConstraint(SpringLayout.NORTH, companyNameField, 8, SpringLayout.NORTH, internalFrame.getContentPane());
+		internalFrame.getContentPane().add(companyNameField);
+		companyNameField.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Company Name:");
-		springLayout.putConstraint(SpringLayout.WEST, txtJpbceInsterstellar, 6, SpringLayout.EAST, lblNewLabel);
+		springLayout.putConstraint(SpringLayout.WEST, companyNameField, 6, SpringLayout.EAST, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel, 0, SpringLayout.NORTH, lblChallengeName);
 		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel, 0, SpringLayout.EAST, lblBaseName);
 		internalFrame.getContentPane().add(lblNewLabel);
@@ -3222,6 +3222,8 @@ public class EditorWindow {
 		_CC.setChallengeDescriptionString(missionDescriptionTextArea.getText());
 		_CC.setObjectiveDescriptionString(objectiveDescriptionField.getText());
 		_CC.setObjectiveDoneString(objectiveDoneTextArea.getText());
+		
+		_CC.setCompanyName(companyNameField.getText()); //sanitation done in setter
 				
 		_CC.setChallengeFilename(challengeFilenameField.getText());
 		_CC.setChallengeDescriptionFilename("en_"+challengeFilenameField.getText());
@@ -3795,6 +3797,7 @@ public class EditorWindow {
 		
 		challengeNameField.setText(_cc.getChallengeName());
 		colonyNameField.setText(_cc.getColonyNameString());
+		companyNameField.setText(_cc.getCompanyName());
 		objectiveDoneTextArea.setText(_cc.getObjectiveDoneString());
 		objectiveDescriptionField.setText(_cc.getObjectiveDescriptionString());
 		challengeFilenameField.setText(_cc.getChallengeFilename());
