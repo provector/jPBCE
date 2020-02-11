@@ -2,7 +2,6 @@ package ie.provector.jpbce.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,12 +57,12 @@ import ie.provector.jpbce.PBCE;
 import ie.provector.jpbce.ScenarioWriter;
 import ie.provector.jpbce.Tools;
 import ie.provector.jpbce.struct.Challenge;
+import ie.provector.jpbce.struct.Challenge.NLHLevel;
+import ie.provector.jpbce.struct.Challenge.PlanetClass;
 import ie.provector.jpbce.struct.Entities;
 import ie.provector.jpbce.struct.HSL;
 import ie.provector.jpbce.struct.RGB;
 import ie.provector.jpbce.struct.Vector;
-import ie.provector.jpbce.struct.Challenge.NLHLevel;
-import ie.provector.jpbce.struct.Challenge.PlanetClass;
 import ie.provector.jpbce.ui.CheckedComboBox.CheckableItem;
 import ie.provector.jpbce.ui.CheckedComboBox.CheckedComboBox;
 import ie.provector.jpbce.ui.SpinnerEditor.SpinnerEditor;
@@ -1369,7 +1368,7 @@ public class EditorWindow {
 				 */
 				{
 					TableColumn characterColumn = characterTable.getColumnModel().getColumn(0);
-					characterColumn.setPreferredWidth(289);
+					characterColumn.setPreferredWidth(288);
 					TableColumn buttonColumn = characterTable.getColumnModel().getColumn(1);
 					buttonColumn.setPreferredWidth(20);
 					buttonColumn.setCellRenderer(new JTableButtonRenderer());
@@ -3580,7 +3579,7 @@ public class EditorWindow {
 			for(int row = 0;row<characterModel.getRowCount();row++) {
 				String name = (String) characterModel.getValueAt(row, 0);
 				if(name==null) {
-					return "ERROR: Empty String. Table 'character'.";
+					return "ERROR: Empty String. Table 'character'.\n(Make sure you pressed ENTER after editing cell.";
 				}else {
 					characterObjectives.add(name);
 				}
@@ -4487,7 +4486,7 @@ public class EditorWindow {
 			structures.forEach((key,value)->{
 				String size = value[0]==0 ? "0 - Any" : ""+value[0];
 				int number = value[1];				
-				Object[] row = { key, size, number};
+				Object[] row = { key, size, crateSpinnerModelWithValue(number),createNewRemoveButton()};
 				model.addRow(row);
 			});
 		}else {
@@ -4500,7 +4499,7 @@ public class EditorWindow {
 			DefaultTableModel model = (DefaultTableModel) resourcesTable.getModel();
 			model.setRowCount(0);
 			resources.forEach((key,value)->{
-				Object[] row = {key,value};
+				Object[] row = {key,crateSpinnerModelWithValue(value),createNewRemoveButton()};
 				model.addRow(row);
 			});
 		}else {
@@ -4513,7 +4512,7 @@ public class EditorWindow {
 			DefaultTableModel model = (DefaultTableModel) componentsTable.getModel();
 			model.setRowCount(0);
 			components.forEach((key,value)->{
-				Object[] row = {key,value};
+				Object[] row = {key,crateSpinnerModelWithValue(value),createNewRemoveButton()};
 				model.addRow(row);
 			});
 		}else {
@@ -4526,7 +4525,7 @@ public class EditorWindow {
 			DefaultTableModel model = (DefaultTableModel) specializationTable.getModel();
 			model.setRowCount(0);
 			specializations.forEach((key,value)->{
-				Object[] row = {key,value};
+				Object[] row = {key,crateSpinnerModelWithValue(value),createNewRemoveButton()};
 				model.addRow(row);
 			});
 		}else {
@@ -4539,7 +4538,7 @@ public class EditorWindow {
 			DefaultTableModel model = (DefaultTableModel) characterTable.getModel();
 			model.setRowCount(0);
 			characters.forEach(character->{
-				Object[] row = {character};
+				Object[] row = {character,createNewRemoveButton()};
 				model.addRow(row);
 			});
 		}else {
@@ -4548,6 +4547,10 @@ public class EditorWindow {
 		}
 			
 			
+	}
+	
+	private SpinnerNumberModel crateSpinnerModelWithValue(int value) {
+		return new SpinnerNumberModel(new Integer(value), new Integer(1), null, new Integer(1));
 	}
 	
 	private void loadEditorFileMenu() {
@@ -4675,15 +4678,6 @@ public class EditorWindow {
 			}
 		}			
 		
-	}
-	
-	private boolean isNumber(String s) {
-		try {
-			Integer.parseInt(s);
-			return true;
-		}catch(Exception e) {
-			return false;
-		}
 	}
 	
 	private class OpenFileFilter extends FileFilter {

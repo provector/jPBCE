@@ -1149,7 +1149,6 @@ public class Challenge {
 	public static enum ExteriorStructure {
 		AntiMeteorLaser,
 		BasePad,
-		//Connection,
 		LandingPad,
 		Mine,
 		Monolith,
@@ -1220,7 +1219,6 @@ public class Challenge {
 		BioDome,
 		Cabin,
 		Canteen,
-		//Connection,
 		ControlCenter,
 		Dorm,
 		Factory,

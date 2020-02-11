@@ -13,7 +13,6 @@ public class Entities {
 		      new CheckableItem("Bio-Dome"),
 		      new CheckableItem("Cabin"),
 		      new CheckableItem("Canteen"),
-		      //new CheckableItem("Connection"),
 		      new CheckableItem("Control Center"),
 		      new CheckableItem("Dorm"),
 		      new CheckableItem("Factory"),
@@ -60,7 +59,6 @@ public class Entities {
 	 public static CheckableItem[] ExternalStructures = {
 		      new CheckableItem("Anti-Meteor Laser"),
 		      new CheckableItem("Base Pad"),
-		      //new CheckableItem("Connection"),
 		      new CheckableItem("Landing Pad"),
 		      new CheckableItem("Mine"),
 		      new CheckableItem("Monolith"),
@@ -182,7 +180,6 @@ public class Entities {
 		     new String("Bio-Dome"),
 		     new String("Cabin"),
 		     new String("Canteen"),
-		     //new String("Connection"),
 		     new String("Control Center"),
 		     new String("Dorm"),
 		     new String("Factory"),

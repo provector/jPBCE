@@ -9,7 +9,7 @@ import ie.provector.jpbce.ui.EditorWindow;
 import ie.provector.jpbce.ui.SplashScreen;
 
 /*
- * 1.0
+ * 1.0.a initial version
  * --------------------------------------------------
  * TODO:	[X] Variables Renaming
  * TODO: 	[X] UI Functionality (Sliders, interactions)
@@ -24,21 +24,14 @@ import ie.provector.jpbce.ui.SplashScreen;
  * TODO: 	[X] Splash Screen
  * TODO:	[X] About
  * TODO: 	[X] move main logic to separate class
- * TODO:	[X] Re-do hsl Transform and Tint Texture
- * TODO: 	[ ] Package into exe
+ * TODO:	[X] Re-do hsl Transform and Tint Texture 	
  * 
  * After:
  * TODO:	[X] UI Values Validation
  * TODO: 	[X] Reset Values/New button
- * TODO:	[ ] infoField messages
- * TODO:	[ ] Unhandled Errors Handling/Custom output Stream
- * 
+
  * Maybe:
- * TODO:	[] JSpinner in table cell
- * TODO:	[] Workshop Uploading
- * TODO:	[] Campaign Support/Groups Support
- * TODO: 	[] Game days to real time indicator
- * TODO:	[] CleanUp and Re-factor the code
+ * TODO:	[X] JSpinner in table cell
  * 
  * 1.0.b dev update
  * 
@@ -72,19 +65,42 @@ import ie.provector.jpbce.ui.SplashScreen;
  * 1.0.g dev update
  * TODO:	[X] Added button to remove specific row from objectives table
  * 
+ * 1.0.h dev update
+ * TODO:	[X] Fixed bug where new objective tables couldn't be loaded from editor file
+ * TODO:	[X] Fixed bug where new objective tables remove button wasn't properly loaded upon loading editor file
+ * 
+ * 1.0.i dev update
+ * TODO: 	[ ] Add checkbox for Starting Specialization and resources to distinguish settings from default values
+ * 
+ * 1.0.j Release
+ * TODO:	[ ] Basic Workshop Uploading
+ * TODO:	[ ] Company Support
+ * TODO: 	[ ] Game days to real time indicator
+ * 
+ * 1.1.a dev
+ * TODO:	[ ] CleanUp and Re-factor the code for translations
+ * 			[ ] Fix UI Refresh BUG
+ * 
+ * 1.1.0 Release
+ * TODO:	[ ] Translation File Suppport
  * --------------------------------------------------
  * 
  * Known Bugs:
  * 
- * TODO: 	[] UI Refresh Issue
- * TODO: 	[] SaveFile name extension suffix
+ * TODO: 	[ ] UI Refresh Issue
+ * TODO: 	[X] SaveFile name extension suffix
  *
- * 1.0b
- * TODO: 	[X] Change to UTF8 encoding for xml file
- * TODO:	[ ] Option for additional language file
- * 			[ ] ? Detect language if game installed
- * 			[ ] Autocreate Planetbase/Challenges dir
- * 			[ ] Add guards
+ * 
+ * 
+ * Future Features:
+ * 			[ ] Storing editor settings, 
+ * 			[ ] Advanced workshop support with uploading jpbce file for later modification and storing item id's
+ * 			[ ] Advanced Campaign support
+ * 			[?] Detect language if game installed
+ * 			[ ] Proper infoField messages
+ * 			[ ] Package into exe
+ * 			[ ] Debug/Unhandled Errors Handling/Custom output Stream
+ * 			[ ] Re-do the UI from crappy swing
  */
 
 public class PBCE {
