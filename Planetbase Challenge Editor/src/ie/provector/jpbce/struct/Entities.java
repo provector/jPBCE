@@ -214,6 +214,7 @@ public class Entities {
 	 public static String[] ResourcesString = {
 			 new String("AlcoholicDrink"),
 			 new String("Bioplastic"),
+			 new String("Coins"),
 			 new String("Gun"),
 			 new String("Meal"),
 			 new String("Medical Supplies"),
