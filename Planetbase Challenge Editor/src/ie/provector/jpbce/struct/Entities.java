@@ -212,7 +212,7 @@ public class Entities {
 	 };
 	 
 	 public static String[] ResourcesString = {
-			 new String("Alcohol"),
+			 new String("AlcoholicDrink"),
 			 new String("Bioplastic"),
 			 new String("Gun"),
 			 new String("Meal"),
