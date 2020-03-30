@@ -277,8 +277,8 @@ public class Entities {
 	 
 	 public static String[] SpecializationsString = {
 			 new String("Biologist"),
-			 new String("Carrier Bot"), //Carrier
-			 new String("Constructor Bot"), //Constructor
+			 new String("Carrier"), //Carrier
+			 new String("Constructor"), //Constructor
 			 new String("Driller"), //Driller
 			 new String("Engineer"),
 			 new String("Guard"),
