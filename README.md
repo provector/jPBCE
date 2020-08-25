@@ -22,6 +22,9 @@ Known Bugs:
 Brief "How to"
 --------------
 
+Up to date instructions and changelog up to full release 1.0.0 (current) are available at:
+https://www.nexusmods.com/planetbase/mods/37?tab=description
+
 All settings in the editor are "OPTIONAL" meaning you can modify one of them and the game engine is "smart" enough to default any other settings based on a planet-class.
 
 "Save Challenge" option will try to save to %HOME%\Documents\Planetbase\Challenges. On some systems, you might get an error. Try creating the directory or use "Save Challenge To" option. It will automatically generate expected files in \Challenges directory. When you start the game your challenge should appear on the list under "JPBCE Editor" group.
